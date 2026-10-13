@@ -371,7 +371,7 @@ export default function CategorySpecificationsPage() {
       {/* Page Header */}
       <div style={{ marginBottom: 20 }}>
         <Title level={3} style={{ marginBottom: 4 }}>
-          <SettingOutlined style={{ marginRight: 8, color: '#176B52' }} />
+          <SettingOutlined style={{ marginRight: 8, color: '#4f46e5' }} />
           Quản lý Danh mục Thông số Kỹ thuật
         </Title>
         <Text type="secondary">
@@ -425,7 +425,7 @@ export default function CategorySpecificationsPage() {
                         <Button
                           type="primary"
                           icon={<PlusOutlined />}
-                          style={{ backgroundColor: '#176B52' }}
+                          style={{ backgroundColor: '#4f46e5' }}
                           onClick={() => {
                             assignForm.resetFields();
                             assignForm.setFieldsValue({
@@ -447,7 +447,7 @@ export default function CategorySpecificationsPage() {
                     <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid #f0f0f0' }}>
                       <Space size="large" wrap>
                         <Text>
-                          Danh mục: <strong style={{ color: '#176B52' }}>{selectedCategoryObj.ten_danh_muc}</strong>
+                          Danh mục: <strong style={{ color: '#4f46e5' }}>{selectedCategoryObj.ten_danh_muc}</strong>
                         </Text>
                         <Text>
                           Tổng số thông số: <strong>{categorySpecs.length}</strong>
@@ -569,7 +569,7 @@ export default function CategorySpecificationsPage() {
             key: '2',
             label: (
               <span>
-                <SettingOutlined /> Thư viện Thông số kỹ thuật
+                <SettingOutlined /> Thư viện Thuộc tính sản phẩm
               </span>
             ),
             children: (
@@ -603,7 +603,7 @@ export default function CategorySpecificationsPage() {
                     <Button
                       type="primary"
                       icon={<PlusOutlined />}
-                      style={{ backgroundColor: '#176B52' }}
+                      style={{ backgroundColor: '#4f46e5' }}
                       onClick={() => {
                         setEditingSpec(null);
                         specForm.resetFields();
@@ -709,7 +709,7 @@ export default function CategorySpecificationsPage() {
                   <Button
                     type="primary"
                     icon={<PlusOutlined />}
-                    style={{ backgroundColor: '#176B52' }}
+                    style={{ backgroundColor: '#4f46e5' }}
                     onClick={() => {
                       setEditingGroup(null);
                       groupForm.resetFields();
@@ -888,7 +888,7 @@ export default function CategorySpecificationsPage() {
           <div style={{ textAlign: 'right', marginTop: 12 }}>
             <Space>
               <Button onClick={() => setAssignModalOpen(false)}>Hủy</Button>
-              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#176B52' }}>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#4f46e5' }}>
                 Lưu và Gán
               </Button>
             </Space>
@@ -917,7 +917,7 @@ export default function CategorySpecificationsPage() {
           <div style={{ textAlign: 'right', marginTop: 12 }}>
             <Space>
               <Button onClick={() => setEditCategorySpecModalOpen(false)}>Hủy</Button>
-              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#176B52' }}>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#4f46e5' }}>
                 Lưu thay đổi
               </Button>
             </Space>
@@ -993,7 +993,7 @@ export default function CategorySpecificationsPage() {
           <div style={{ textAlign: 'right', marginTop: 12 }}>
             <Space>
               <Button onClick={() => setSpecModalOpen(false)}>Hủy</Button>
-              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#176B52' }}>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#4f46e5' }}>
                 Lưu
               </Button>
             </Space>
@@ -1026,7 +1026,7 @@ export default function CategorySpecificationsPage() {
           <div style={{ textAlign: 'right', marginTop: 12 }}>
             <Space>
               <Button onClick={() => setGroupModalOpen(false)}>Hủy</Button>
-              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#176B52' }}>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#4f46e5' }}>
                 Lưu
               </Button>
             </Space>

@@ -39,7 +39,7 @@ export default function LoginScreen() {
   return (
     <AuthShell>
         <Text style={styles.title}>Chào bạn trở lại!</Text>
-        <Text style={styles.subtitle}>Đăng nhập để tiếp tục chọn đồ cho tổ ấm.</Text>
+        <Text style={styles.subtitle}>Đăng nhập để tiếp tục khám phá SmartShop.</Text>
         {registered === '1' ? <Text accessibilityRole="alert" style={styles.success}>Đăng ký thành công. Vui lòng đăng nhập để tiếp tục.</Text> : null}
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
         <AuthField placeholder="Tên đăng nhập" value={ten_dang_nhap} onChangeText={value => { setTenDangNhap(value); setError(''); }} autoCapitalize="none" autoCorrect={false} editable={!loading} />
@@ -55,13 +55,13 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  success: { color: '#176B52', fontSize: 13, lineHeight: 20, marginBottom: 12 },
+  success: { color: '#4f46e5', fontSize: 13, lineHeight: 20, marginBottom: 12 },
   error: { color: '#A52D2D', fontSize: 13, lineHeight: 20, marginBottom: 12 },
-  hint: { color: '#6D7D76', fontSize: 12, marginBottom: 12 },
-  title: { color: '#183C35', fontSize: 30, fontWeight: '800' },
-  subtitle: { color: '#6D7D76', marginTop: 6, marginBottom: 24 },
-  button: { height: 54, borderRadius: 16, backgroundColor: '#176B52', alignItems: 'center', justifyContent: 'center', marginTop: 4 },
+  hint: { color: '#68748c', fontSize: 12, marginBottom: 12 },
+  title: { color: '#17213d', fontSize: 30, fontWeight: '800' },
+  subtitle: { color: '#68748c', marginTop: 6, marginBottom: 24 },
+  button: { height: 54, borderRadius: 16, backgroundColor: '#4f46e5', alignItems: 'center', justifyContent: 'center', marginTop: 4 },
   disabled: { opacity: 0.65 },
   buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 },
-  linkText: { paddingVertical: 16, marginTop: 6, textAlign: 'center', color: '#176B52', fontWeight: '700' },
+  linkText: { paddingVertical: 16, marginTop: 6, textAlign: 'center', color: '#4f46e5', fontWeight: '700' },
 });

@@ -75,11 +75,11 @@ export default function RegisterScreen() {
 
 const styles = StyleSheet.create({
   error: { color: '#A52D2D', fontSize: 13, lineHeight: 20, marginBottom: 12 },
-  hint: { color: '#6D7D76', fontSize: 12, marginBottom: 12 },
-  title: { color: '#183C35', fontSize: 30, fontWeight: '800' },
-  subtitle: { color: '#6D7D76', marginTop: 6, marginBottom: 24 },
-  button: { height: 54, borderRadius: 16, backgroundColor: '#176B52', alignItems: 'center', justifyContent: 'center', marginTop: 4 },
+  hint: { color: '#68748c', fontSize: 12, marginBottom: 12 },
+  title: { color: '#17213d', fontSize: 30, fontWeight: '800' },
+  subtitle: { color: '#68748c', marginTop: 6, marginBottom: 24 },
+  button: { height: 54, borderRadius: 16, backgroundColor: '#4f46e5', alignItems: 'center', justifyContent: 'center', marginTop: 4 },
   disabled: { opacity: 0.65 },
   buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 },
-  linkText: { paddingVertical: 16, marginTop: 6, textAlign: 'center', color: '#176B52', fontWeight: '700' },
+  linkText: { paddingVertical: 16, marginTop: 6, textAlign: 'center', color: '#4f46e5', fontWeight: '700' },
 });

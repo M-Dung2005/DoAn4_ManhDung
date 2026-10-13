@@ -18,7 +18,7 @@ export function ScreenHeading({ eyebrow, title, subtitle, icon }: { eyebrow: str
 
 export function ProductImage({ uri, style }: { uri?: string | null; style?: StyleProp<ImageStyle> }) {
   const [failedUri, setFailedUri] = useState<string>();
-  if (!uri || failedUri === uri) return <View style={[styles.imageFallback, style]}><MaterialIcons name="electrical-services" size={36} color={shop.muted} /><Text style={styles.fallbackText}>Electric Shop</Text></View>;
+  if (!uri || failedUri === uri) return <View style={[styles.imageFallback, style]}><MaterialIcons name="shopping-bag" size={36} color={shop.muted} /><Text style={styles.fallbackText}>SmartShop</Text></View>;
   return <Image source={{ uri }} resizeMode="contain" style={style} onError={() => setFailedUri(uri)} />;
 }
 
@@ -27,7 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
     <Pressable accessibilityLabel={`Xem ${product.ten_san_pham}`} style={styles.product} android_ripple={{ color: shop.soft }}>
       <View style={styles.imageWrap}><ProductImage uri={product.hinh_anh} style={styles.productImage} /><View style={styles.productArrow}><MaterialIcons name="north-east" size={16} color={shop.ink} /></View></View>
       <View style={styles.productCopy}>
-        <Text numberOfLines={1} style={styles.productCategory}>{product.ten_thuong_hieu || product.ten_danh_muc || 'ĐIỆN GIA DỤNG'}</Text>
+        <Text numberOfLines={1} style={styles.productCategory}>{product.ten_thuong_hieu || product.ten_danh_muc || 'SMARTSHOP'}</Text>
         <Text numberOfLines={2} style={styles.productName}>{product.ten_san_pham}</Text>
         <Text style={styles.price}>{formatCurrency(product.gia_ban)}</Text>
         <View style={styles.stockRow}><View style={[styles.dot, Number(product.so_luong) <= 0 && { backgroundColor: shop.danger }]} /><Text style={styles.stock}>{Number(product.so_luong) > 0 ? 'Có sẵn' : 'Hết hàng'}</Text></View>
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
   title: { color: shop.ink, fontSize: 29, fontWeight: '800', letterSpacing: -0.8, marginTop: 7 },
   subtitle: { color: shop.muted, fontSize: 13, lineHeight: 20, marginTop: 7 },
   headingIcon: { width: 52, height: 52, borderRadius: 18, backgroundColor: shop.soft, alignItems: 'center', justifyContent: 'center' },
-  product: { flex: 1, overflow: 'hidden', borderRadius: 22, backgroundColor: shop.surface, borderWidth: 1, borderColor: shop.border, ...cardShadow },
-  imageWrap: { backgroundColor: '#EEF2E9', margin: 7, borderRadius: 16, overflow: 'hidden' },
-  productImage: { width: '100%', aspectRatio: 1.05 },
+  product: { flex: 1, overflow: 'hidden', borderRadius: 16, backgroundColor: shop.surface, borderWidth: 1, borderColor: shop.border, ...cardShadow },
+  imageWrap: { backgroundColor: '#f1f3fa', margin: 0, borderRadius: 0, overflow: 'hidden' },
+  productImage: { width: '100%', aspectRatio: 1.12 },
   productArrow: { position: 'absolute', right: 8, bottom: 8, width: 28, height: 28, borderRadius: 14, backgroundColor: '#FFFFFFE6', justifyContent: 'center', alignItems: 'center' },
   productCopy: { padding: 12, paddingTop: 8 },
   productCategory: { color: shop.muted, fontSize: 9, fontWeight: '700', letterSpacing: 0.8, textTransform: 'uppercase' },
-  productName: { color: shop.ink, fontSize: 13, fontWeight: '700', lineHeight: 19, minHeight: 38, marginTop: 6 },
+  productName: { color: shop.ink, fontSize: 14, fontWeight: '700', lineHeight: 19, minHeight: 38, marginTop: 6 },
   price: { color: shop.primary, fontSize: 16, fontWeight: '800', marginTop: 10, letterSpacing: -0.4 },
   stockRow: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 8 },
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: shop.primary },

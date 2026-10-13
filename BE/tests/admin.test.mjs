@@ -8,7 +8,7 @@ import { adminValidation } from '../dist/middleware/adminValidation.middleware.j
 import { updateTrangThaiDonHang, deleteDonHang } from '../dist/controllers/donHang.controller.js';
 import { deleteTaiKhoan, updateTaiKhoan } from '../dist/controllers/taiKhoan.controller.js';
 import { deleteDanhGia, getAllDanhGia } from '../dist/controllers/danhGia.controller.js';
-import { getAllSanPham, deleteSanPham } from '../dist/controllers/sanPham.controller.js';
+import { getAllSanPham, deleteSanPham, extractImagesInput } from '../dist/controllers/sanPham.controller.js';
 import { createNhanVien } from '../dist/controllers/nhanVien.controller.js';
 
 function response() { return { statusCode: 200, body: null, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } }; }
@@ -133,6 +133,14 @@ test('product foreign key delete errors are reported as conflicts', async () => 
   };
   const res = response(); await deleteSanPham({ params: { id: '1' } }, res); assert.equal(res.statusCode, 409);
 });
+
+test('saving nested local product photos does not embed the admin backend hostname', () => {
+  const path = '/uploads/smartshop/real-photos/SS-0101.jpg';
+  const result = extractImagesInput({ hinh_anh: 'http://127.0.0.1:3000' + path, danh_sach_hinh_anh: [{ duong_dan: 'http://127.0.0.1:3000' + path, la_anh_chinh: true }] });
+  assert.equal(result.primaryImage, path);
+  assert.equal(result.allImages[0].duong_dan, path);
+  assert.equal(extractImagesInput({ hinh_anh: 'https://example.com/product.jpg' }).primaryImage, 'https://example.com/product.jpg');
+});
 test('employee cannot link a customer account', async () => {
   pool.query = async () => [[]]; pool.execute = () => assert.fail('Invalid account inserted');
   const res = response(); await createNhanVien({ body: { ma_tai_khoan: 8, ho_ten: 'Test' } }, res);
@@ -141,6 +149,24 @@ test('employee cannot link a customer account', async () => {
 test('form validation returns field errors for negative prices and invalid email', () => {
   const res = response(); adminValidation({ method: 'POST', path: '/san-pham', body: { gia_ban: -1, email: 'bad' } }, res, () => assert.fail('Accepted invalid data'));
   assert.equal(res.statusCode, 400); assert.ok(res.body.fieldErrors.gia_ban); assert.ok(res.body.fieldErrors.email); assert.ok(res.body.fieldErrors.ten_san_pham);
+});
+
+test('nested admin actions use their own validation instead of requiring parent form fields', () => {
+  for (const [method, path, body] of [
+    ['POST', '/danh-muc/4/thong-so', { ma_thong_so: 5, bat_buoc: true }],
+    ['PUT', '/danh-muc/4/thong-so/5', { bat_buoc: false }],
+    ['POST', '/san-pham/1/hinh-anh', { duong_dan: '/uploads/test.jpg' }],
+    ['PUT', '/san-pham/1/hinh-anh/2/chinh', {}],
+    ['POST', '/nhan-vien/1/account', { ten_dang_nhap: 'test' }],
+  ]) {
+    let nextCalled = false;
+    adminValidation({ method, path, body }, response(), () => { nextCalled = true; });
+    assert.equal(nextCalled, true, `${method} ${path}`);
+  }
+  const res = response();
+  adminValidation({ method: 'POST', path: '/products', body: { gia_ban: -1 } }, res, () => assert.fail('Alias bypassed validation'));
+  assert.equal(res.statusCode, 400);
+  assert.ok(res.body.fieldErrors.ten_san_pham);
 });
 
 

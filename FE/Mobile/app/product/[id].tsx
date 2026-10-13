@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { EmptyState, LoadingState, ProductCard, ProductImage } from '@/components/shop-ui';
 import { cartService } from '@/services/cart.service';
 import { productService } from '@/services/product.service';
+import { shop } from '@/constants/shop-theme';
 import type { GroupedSpecification, GroupedSpecificationItem, Product, ProductImage as IProductImage, ProductReview, ProductSpecification, ProductVariant } from '@/types';
 import { formatCurrency, formatDate, getApiMessage } from '@/utils/format';
 
@@ -326,7 +327,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
         <Pressable accessibilityRole="button" accessibilityLabel="Xem ảnh sản phẩm" style={styles.imageCard} onPress={() => setZoom(true)}>
           <ProductImage uri={currentImageUri} style={styles.image} />
           <View style={styles.imageLabel}>
-            <MaterialIcons name="zoom-in" size={19} color="#176B52" />
+            <MaterialIcons name="zoom-in" size={19} color="#4f46e5" />
             <Text style={styles.muted}>Phóng to ảnh</Text>
           </View>
         </Pressable>
@@ -350,7 +351,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
         )}
 
         <View style={styles.row}>
-          <Text style={styles.category}>{product.ten_danh_muc || 'ĐIỆN GIA DỤNG'}</Text>
+          <Text style={styles.category}>{product.ten_danh_muc || 'SMARTSHOP'}</Text>
           <Pressable accessibilityRole="button" onPress={() => router.push('/cart' as any)}>
             <Text style={styles.link}>Xem giỏ hàng</Text>
           </Pressable>
@@ -359,10 +360,11 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
         <Text style={styles.title}>{product.ten_san_pham}</Text>
 
         <Text style={styles.muted}>Mã: {product.ma_san_pham_code}{product.ten_thuong_hieu ? ` · ${product.ten_thuong_hieu}` : ''}</Text>
+        <Pressable accessibilityRole="button" accessibilityLabel="Hỏi AI về sản phẩm này" onPress={() => router.push({ pathname: '/chatbot' as any, params: { productId: String(product.ma_san_pham) } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 12 }}><MaterialIcons name="auto-awesome" size={18} color={shop.primary} /><Text style={styles.link}>Hỏi AI về sản phẩm này</Text></Pressable>
         {rating && !reviewError ? <Text style={styles.rating}>★ {rating}/5 · {reviews.length} đánh giá</Text> : null}
         <Text style={styles.price}>{formatCurrency(displayPrice)}</Text>
         <View style={styles.inline}>
-          <MaterialIcons name={available ? 'check-circle' : 'error-outline'} size={19} color={available ? '#176B52' : '#A52D2D'} />
+          <MaterialIcons name={available ? 'check-circle' : 'error-outline'} size={19} color={available ? '#4f46e5' : '#A52D2D'} />
           <Text style={[styles.stock, !available && styles.error]}>{stockLabel}</Text>
         </View>
 
@@ -379,7 +381,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
             <Text style={styles.sectionTitle}>Tùy chọn sản phẩm</Text>
             {selectedVariant ? (
               <Text style={styles.muted}>
-                Đang chọn: <Text style={{ fontWeight: '700', color: '#183C35' }}>{selectedVariant.ten_bien_the}</Text>
+                Đang chọn: <Text style={{ fontWeight: '700', color: '#17213d' }}>{selectedVariant.ten_bien_the}</Text>
               </Text>
             ) : null}
 
@@ -440,7 +442,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
                 style={[styles.qtyButton, (!available || count <= 1) && styles.disabled]}
                 onPress={() => changeQuantity(String(count - 1))}
               >
-                <MaterialIcons name="remove" size={20} color="#183C35" />
+                <MaterialIcons name="remove" size={20} color="#17213d" />
               </Pressable>
               <TextInput
                 accessibilityLabel="Số lượng mua"
@@ -459,7 +461,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
                 style={[styles.qtyButton, (!available || count >= max) && styles.disabled]}
                 onPress={() => changeQuantity(String(Math.max(1, count + 1)))}
               >
-                <MaterialIcons name="add" size={20} color="#183C35" />
+                <MaterialIcons name="add" size={20} color="#17213d" />
               </Pressable>
             </View>
             <Text style={styles.muted}>Tối đa {max} sản phẩm</Text>
@@ -476,7 +478,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
 
         {/* Technical Specifications by Group */}
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Thông số kỹ thuật</Text>
+          <Text style={styles.sectionTitle}>Thuộc tính sản phẩm</Text>
           {displayedGroupedSpecs.length > 0 ? (
             displayedGroupedSpecs.map(group => (
               <View key={group.group} style={styles.specGroupBlock}>
@@ -494,7 +496,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
               </View>
             ))
           ) : (
-            <Text style={styles.hint}>Thông số kỹ thuật chi tiết đang được cập nhật.</Text>
+            <Text style={styles.hint}>Thuộc tính sản phẩm chi tiết đang được cập nhật.</Text>
           )}
         </View>
 
@@ -576,7 +578,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
             style={[styles.action, styles.addButton, !canBuy && styles.disabled]}
             onPress={addToCart}
           >
-            <MaterialIcons name="add-shopping-cart" size={19} color="#176B52" />
+            <MaterialIcons name="add-shopping-cart" size={19} color="#4f46e5" />
             <Text style={styles.addText}>{adding ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}</Text>
           </Pressable>
           <Pressable
@@ -599,7 +601,7 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
             <Text style={styles.sectionTitle}>{product.ten_san_pham}</Text>
             <ProductImage uri={currentImageUri} style={styles.zoomImage} />
             <Pressable accessibilityRole="button" accessibilityLabel="Đóng ảnh sản phẩm" onPress={() => setZoom(false)} style={styles.qtyButton}>
-              <MaterialIcons name="close" size={24} color="#183C35" />
+              <MaterialIcons name="close" size={24} color="#17213d" />
             </Pressable>
           </View>
         </View>
@@ -609,58 +611,58 @@ function ProductDetail({ id, initialQuantity }: { id: string; initialQuantity?: 
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F2' },
+  safe: { flex: 1, backgroundColor: '#f5f6fb' },
   content: { padding: 20, paddingBottom: 28, width: '100%', maxWidth: 800, alignSelf: 'center', gap: 14 },
-  imageCard: { borderRadius: 24, backgroundColor: '#EEF2E9', overflow: 'hidden' },
+  imageCard: { borderRadius: 24, backgroundColor: '#f1f3fa', overflow: 'hidden' },
   image: { width: '100%', aspectRatio: 1.25, maxHeight: 380 },
   imageLabel: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, padding: 10 },
   galleryRow: { flexDirection: 'row', gap: 10, marginVertical: 4 },
-  thumbnailWrap: { width: 56, height: 56, borderRadius: 12, borderWidth: 2, borderColor: '#E3E9E1', overflow: 'hidden', padding: 2, backgroundColor: '#fff' },
-  thumbnailActive: { borderColor: '#176B52' },
+  thumbnailWrap: { width: 56, height: 56, borderRadius: 12, borderWidth: 2, borderColor: '#e2e7f2', overflow: 'hidden', padding: 2, backgroundColor: '#fff' },
+  thumbnailActive: { borderColor: '#4f46e5' },
   thumbnail: { width: '100%', height: '100%', borderRadius: 8 },
-  category: { color: '#176B52', fontSize: 11, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1 },
-  title: { color: '#183C35', fontSize: 25, lineHeight: 32, fontWeight: '800' },
-  price: { color: '#176B52', fontSize: 26, fontWeight: '800' },
-  stock: { color: '#176B52', fontSize: 13, fontWeight: '700', flexShrink: 1 },
+  category: { color: '#4f46e5', fontSize: 11, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1 },
+  title: { color: '#17213d', fontSize: 25, lineHeight: 32, fontWeight: '800' },
+  price: { color: '#4f46e5', fontSize: 26, fontWeight: '800' },
+  stock: { color: '#4f46e5', fontSize: 13, fontWeight: '700', flexShrink: 1 },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' },
   inline: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  muted: { color: '#6D7D76', fontSize: 13, lineHeight: 21 },
-  hint: { color: '#6D7D76', fontSize: 12, lineHeight: 19 },
-  name: { color: '#183C35', fontSize: 14, fontWeight: '700' },
+  muted: { color: '#68748c', fontSize: 13, lineHeight: 21 },
+  hint: { color: '#68748c', fontSize: 12, lineHeight: 19 },
+  name: { color: '#17213d', fontSize: 14, fontWeight: '700' },
   rating: { color: '#956900', fontSize: 13, fontWeight: '700' },
-  link: { color: '#176B52', fontWeight: '700', paddingVertical: 8, fontSize: 13 },
-  centerLink: { color: '#176B52', textAlign: 'center', padding: 20 },
+  link: { color: '#4f46e5', fontWeight: '700', paddingVertical: 8, fontSize: 13 },
+  centerLink: { color: '#4f46e5', textAlign: 'center', padding: 20 },
   benefits: { backgroundColor: '#EAF2E6', padding: 14, borderRadius: 14, gap: 6 },
   variantRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   variantButton: { minWidth: 108, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 12, padding: 10, gap: 4, backgroundColor: '#fff' },
-  variantSelected: { borderColor: '#176B52', backgroundColor: '#EDF5E9' },
-  variantLabel: { color: '#183C35', fontSize: 14, fontWeight: '800' },
-  variantLabelSelected: { color: '#176B52' },
-  variantPrice: { color: '#6D7D76', fontSize: 11 },
+  variantSelected: { borderColor: '#4f46e5', backgroundColor: '#EDF5E9' },
+  variantLabel: { color: '#17213d', fontSize: 14, fontWeight: '800' },
+  variantLabelSelected: { color: '#4f46e5' },
+  variantPrice: { color: '#68748c', fontSize: 11 },
   disabledText: { color: '#8A9993' },
   unavailableBadge: { fontSize: 10, color: '#A52D2D', fontWeight: '600', marginTop: 2 },
   specChoice: { gap: 9 },
-  choiceTitle: { color: '#183C35', fontSize: 14, fontWeight: '800' },
-  card: { padding: 18, borderRadius: 20, borderWidth: 1, borderColor: '#E3E9E1', backgroundColor: '#fff', gap: 14 },
-  sectionTitle: { color: '#183C35', fontSize: 17, fontWeight: '800' },
+  choiceTitle: { color: '#17213d', fontSize: 14, fontWeight: '800' },
+  card: { padding: 18, borderRadius: 20, borderWidth: 1, borderColor: '#e2e7f2', backgroundColor: '#fff', gap: 14 },
+  sectionTitle: { color: '#17213d', fontSize: 17, fontWeight: '800' },
   description: { color: '#596C62', fontSize: 14, lineHeight: 23 },
   qtyButton: { width: 44, height: 44, borderRadius: 10, backgroundColor: '#EDF2E9', alignItems: 'center', justifyContent: 'center' },
-  quantityInput: { width: 54, height: 44, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 10, textAlign: 'center', color: '#183C35', fontSize: 16, fontWeight: '700' },
+  quantityInput: { width: 54, height: 44, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 10, textAlign: 'center', color: '#17213d', fontSize: 16, fontWeight: '700' },
   specGroupBlock: { marginBottom: 12 },
-  specGroupTitle: { fontSize: 11, fontWeight: '800', color: '#176B52', letterSpacing: 1, marginBottom: 8, borderBottomWidth: 1, borderBottomColor: '#F0F4EE', paddingBottom: 4 },
+  specGroupTitle: { fontSize: 11, fontWeight: '800', color: '#4f46e5', letterSpacing: 1, marginBottom: 8, borderBottomWidth: 1, borderBottomColor: '#F0F4EE', paddingBottom: 4 },
   specRow: { flexDirection: 'row', gap: 12, paddingVertical: 8, borderBottomWidth: 1, borderColor: '#EDF2E9' },
-  specLabel: { width: '40%', color: '#6D7D76', fontSize: 13 },
-  specValue: { flex: 1, color: '#183C35', fontSize: 13, lineHeight: 20, fontWeight: '600' },
+  specLabel: { width: '40%', color: '#68748c', fontSize: 13 },
+  specValue: { flex: 1, color: '#17213d', fontSize: 13, lineHeight: 20, fontWeight: '600' },
   review: { gap: 8, paddingTop: 14, borderTopWidth: 1, borderColor: '#EDF2E9' },
   related: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   relatedItem: { width: '47%', flexGrow: 1 },
-  footer: { padding: 16, width: '100%', maxWidth: 800, alignSelf: 'center', backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#E3E9E1', gap: 10 },
-  footerPrice: { color: '#176B52', fontSize: 22, fontWeight: '800' },
+  footer: { padding: 16, width: '100%', maxWidth: 800, alignSelf: 'center', backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#e2e7f2', gap: 10 },
+  footerPrice: { color: '#4f46e5', fontSize: 22, fontWeight: '800' },
   actions: { flexDirection: 'row', gap: 10 },
   action: { flex: 1, minHeight: 54, padding: 10, borderRadius: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7 },
-  addButton: { borderWidth: 1, borderColor: '#176B52', backgroundColor: '#EDF5E9' },
-  buyButton: { backgroundColor: '#176B52' },
-  addText: { color: '#176B52', fontSize: 13, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
+  addButton: { borderWidth: 1, borderColor: '#4f46e5', backgroundColor: '#EDF5E9' },
+  buyButton: { backgroundColor: '#4f46e5' },
+  addText: { color: '#4f46e5', fontSize: 13, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
   buyText: { color: '#fff', fontSize: 13, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
   disabled: { opacity: 0.45 },
   error: { color: '#A52D2D', fontSize: 13, lineHeight: 20 },

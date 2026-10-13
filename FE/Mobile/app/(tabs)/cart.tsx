@@ -65,7 +65,7 @@ export default function CartScreen() {
   if (loading) return <LoadingState message="Đang tải giỏ hàng..." />;
   return <SafeAreaView style={styles.safe} edges={['top']}>
     <ScrollView contentContainerStyle={styles.content} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); void loadCart(); }} />}>
-      <ScreenHeading eyebrow="GIỎ HÀNG CỦA BẠN" title="Sắp về với tổ ấm" subtitle="Kiểm tra sản phẩm rồi tiếp tục đến bước thanh toán." icon="shopping-bag" />
+      <ScreenHeading eyebrow="GIỎ HÀNG CỦA BẠN" title="Những món bạn chọn" subtitle="Kiểm tra sản phẩm rồi tiếp tục đến bước thanh toán." icon="shopping-bag" />
       {error ? <View accessibilityRole="alert" style={styles.errorBox}><Text style={styles.error}>{error}</Text><Pressable onPress={loadCart}><Text style={styles.link}>Tải lại giỏ hàng</Text></Pressable></View> : null}
       {!items.length ? <EmptyState icon="shopping-bag" title="Giỏ hàng chờ bạn chọn" action="Khám phá sản phẩm" onAction={() => router.push('/products')} /> : <>
         {items.map(item => <View style={styles.item} key={`${item.ma_san_pham}:${item.ma_bien_the || 0}`}>
@@ -82,12 +82,12 @@ export default function CartScreen() {
             <Text style={styles.price}>{formatCurrency(item.gia_ban)}</Text>
             {item.trang_thai !== 'DangBan' || Number(item.ton_kho) < item.so_luong ? <Text style={styles.error}>Sản phẩm không bán hoặc không đủ tồn kho.</Text> : null}
             <View style={styles.quantity}>
-              <Pressable accessibilityRole="button" accessibilityLabel={`Giảm số lượng ${item.ten_san_pham}`} disabled={updating || Boolean(item.needs_variant)} style={styles.qtyButton} onPress={() => update(item, item.so_luong - 1)}><MaterialIcons name="remove" size={18} color="#183C35" /></Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel={`Giảm số lượng ${item.ten_san_pham}`} disabled={updating || Boolean(item.needs_variant)} style={styles.qtyButton} onPress={() => update(item, item.so_luong - 1)}><MaterialIcons name="remove" size={18} color="#17213d" /></Pressable>
               <Text style={styles.name}>{item.so_luong}</Text>
-              <Pressable accessibilityRole="button" accessibilityLabel={`Tăng số lượng ${item.ten_san_pham}`} disabled={updating || Boolean(item.needs_variant) || item.so_luong >= Number(item.ton_kho)} style={styles.qtyButton} onPress={() => update(item, item.so_luong + 1)}><MaterialIcons name="add" size={18} color="#183C35" /></Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel={`Tăng số lượng ${item.ten_san_pham}`} disabled={updating || Boolean(item.needs_variant) || item.so_luong >= Number(item.ton_kho)} style={styles.qtyButton} onPress={() => update(item, item.so_luong + 1)}><MaterialIcons name="add" size={18} color="#17213d" /></Pressable>
             </View>
           </View>
-          <Pressable accessibilityRole="button" accessibilityLabel={`Xóa ${item.ten_san_pham}`} disabled={updating} onPress={() => update(item, 0)} hitSlop={12}><MaterialIcons name="delete-outline" size={24} color="#6D7D76" /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={`Xóa ${item.ten_san_pham}`} disabled={updating} onPress={() => update(item, 0)} hitSlop={12}><MaterialIcons name="delete-outline" size={24} color="#68748c" /></Pressable>
         </View>)}
         <View style={styles.summary}>
           <Text style={styles.name}>Tạm tính ({items.reduce((sum, item) => sum + item.so_luong, 0)} sản phẩm)</Text>
@@ -104,11 +104,11 @@ export default function CartScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F2' }, content: { padding: 20, paddingBottom: 30, width: '100%', maxWidth: 760, alignSelf: 'center' },
+  safe: { flex: 1, backgroundColor: '#f5f6fb' }, content: { padding: 20, paddingBottom: 30, width: '100%', maxWidth: 760, alignSelf: 'center' },
   item: { flexDirection: 'row', gap: 12, alignItems: 'center', padding: 16, borderRadius: 20, backgroundColor: '#fff', marginBottom: 12, borderWidth: 1, borderColor: '#EAF0E7' },
-  image: { width: 70, height: 70, borderRadius: 12 }, info: { flex: 1, gap: 6 }, name: { color: '#183C35', fontWeight: '700', fontSize: 14 }, price: { color: '#176B52', fontWeight: '800' },
+  image: { width: 70, height: 70, borderRadius: 12 }, info: { flex: 1, gap: 6 }, name: { color: '#17213d', fontWeight: '700', fontSize: 14 }, price: { color: '#4f46e5', fontWeight: '800' },
   quantity: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 4 }, qtyButton: { width: 36, height: 36, backgroundColor: '#EDF2E9', borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  error: { color: '#A52D2D', fontSize: 13, lineHeight: 20 }, errorBox: { backgroundColor: '#FBEDEC', padding: 16, borderRadius: 12, marginBottom: 12 }, link: { color: '#176B52', paddingTop: 10, fontWeight: '700' },
-  summary: { backgroundColor: '#fff', padding: 22, borderRadius: 22, gap: 16, marginTop: 10 }, total: { color: '#176B52', fontSize: 26, fontWeight: '800' }, muted: { color: '#6D7D76', lineHeight: 22, fontSize: 13 },
-  button: { minHeight: 54, backgroundColor: '#176B52', borderRadius: 14, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10 }, buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 },
+  error: { color: '#A52D2D', fontSize: 13, lineHeight: 20 }, errorBox: { backgroundColor: '#FBEDEC', padding: 16, borderRadius: 12, marginBottom: 12 }, link: { color: '#4f46e5', paddingTop: 10, fontWeight: '700' },
+  summary: { backgroundColor: '#fff', padding: 22, borderRadius: 22, gap: 16, marginTop: 10 }, total: { color: '#4f46e5', fontSize: 26, fontWeight: '800' }, muted: { color: '#68748c', lineHeight: 22, fontSize: 13 },
+  button: { minHeight: 54, backgroundColor: '#4f46e5', borderRadius: 14, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10 }, buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 },
 });

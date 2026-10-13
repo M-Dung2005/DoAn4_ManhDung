@@ -50,16 +50,16 @@ export function OrderProductReview({ orderId, productId, review }: {
       <Pressable accessibilityRole="button" style={styles.toggle} onPress={() => { setStars(current.so_sao); setContent(current.noi_dung || ''); setError(''); setEditing(true); setExpanded(true); }}><Text style={styles.title}>Sửa đánh giá</Text></Pressable>
     </View> : <>
       <Pressable accessibilityRole="button" accessibilityState={{ expanded }} onPress={() => setExpanded(!expanded)} disabled={sending} style={styles.toggle}>
-        <MaterialIcons name="rate-review" size={19} color="#176B52" />
+        <MaterialIcons name="rate-review" size={19} color="#4f46e5" />
         <Text style={styles.title}>{expanded ? 'Đánh giá của bạn' : 'Đánh giá sản phẩm'}</Text>
-        <MaterialIcons name={expanded ? 'expand-less' : 'expand-more'} size={20} color="#176B52" />
+        <MaterialIcons name={expanded ? 'expand-less' : 'expand-more'} size={20} color="#4f46e5" />
       </Pressable>
       {expanded ? <View style={styles.form}>
         <Text style={styles.body}>Bạn cảm thấy sản phẩm như thế nào?</Text>
         <View style={styles.stars}>{[1, 2, 3, 4, 5].map(value => <Pressable key={value} accessibilityRole="button" accessibilityLabel={`${value} sao`} accessibilityState={{ selected: stars === value, disabled: sending }} disabled={sending} onPress={() => { setStars(value); setError(''); }} style={styles.star}>
           <MaterialIcons name={value <= stars ? 'star' : 'star-border'} size={32} color="#B87D16" />
         </Pressable>)}</View>
-        <TextInput accessibilityLabel="Nhận xét sản phẩm" placeholder="Chia sẻ cảm nhận của bạn (không bắt buộc)" placeholderTextColor="#6D7D76" multiline maxLength={2000} value={content} onChangeText={setContent} editable={!sending} style={styles.input} />
+        <TextInput accessibilityLabel="Nhận xét sản phẩm" placeholder="Chia sẻ cảm nhận của bạn (không bắt buộc)" placeholderTextColor="#68748c" multiline maxLength={2000} value={content} onChangeText={setContent} editable={!sending} style={styles.input} />
         <Text style={styles.counter}>{content.length}/2000</Text>
         {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
         <Pressable accessibilityRole="button" accessibilityState={{ disabled: sending }} disabled={sending} onPress={submit} style={[styles.submit, sending && { opacity: 0.6 }]}>
@@ -74,14 +74,14 @@ export function OrderProductReview({ orderId, productId, review }: {
 const styles = StyleSheet.create({
   container: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#EDF2E9' },
   toggle: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 44 },
-  title: { color: '#176B52', fontSize: 13, fontWeight: '700' },
-  body: { color: '#52675D', fontSize: 13, marginTop: 6, lineHeight: 20 },
+  title: { color: '#4f46e5', fontSize: 13, fontWeight: '700' },
+  body: { color: '#64748b', fontSize: 13, marginTop: 6, lineHeight: 20 },
   form: { gap: 8 },
   stars: { flexDirection: 'row', flexWrap: 'wrap' },
   star: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
-  input: { borderWidth: 1, borderColor: '#D9E4DA', borderRadius: 12, padding: 12, minHeight: 96, textAlignVertical: 'top', color: '#183C35', fontSize: 14 },
-  counter: { textAlign: 'right', color: '#6D7D76', fontSize: 11 },
+  input: { borderWidth: 1, borderColor: '#D9E4DA', borderRadius: 12, padding: 12, minHeight: 96, textAlignVertical: 'top', color: '#17213d', fontSize: 14 },
+  counter: { textAlign: 'right', color: '#68748c', fontSize: 11 },
   error: { color: '#BC4545', fontSize: 13 },
-  submit: { backgroundColor: '#176B52', borderRadius: 12, padding: 13, alignItems: 'center' },
+  submit: { backgroundColor: '#4f46e5', borderRadius: 12, padding: 13, alignItems: 'center' },
   submitText: { color: '#fff', fontWeight: '700' },
 });

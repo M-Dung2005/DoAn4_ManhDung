@@ -7,6 +7,7 @@ import { mkdirSync, createWriteStream } from 'node:fs';
 import uploadRoutes, { uploadDirectory } from './routes/upload.routes.js';
 import shopRoutes from './routes/shop.routes.js';
 import permissionRoutes from './routes/permission.routes.js';
+import chatbotRoutes from './routes/chatbot.routes.js';
 import { rateLimit } from './middleware/rateLimit.middleware.js';
 
 import { testConnection } from './config/database.js';
@@ -53,6 +54,7 @@ app.use('/uploads', express.static(uploadDirectory, { dotfiles: 'deny', index: f
 app.use('/api/uploads', uploadRoutes);
 app.use('/api/shop', shopRoutes);
 app.use('/api/permissions', permissionRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/lien-he', (req, res, next) => req.method === 'POST' ? contactLimit(req, res, next) : next());
 
 app.get('/api/health', (_req, res) => {
@@ -78,6 +80,6 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 app.listen(PORT, '0.0.0.0', async () => {
-  console.log(`Backend running at http://0.0.0.0:${PORT}`);
+  console.log(`SmartShop API running at http://0.0.0.0:${PORT}`);
   await testConnection();
 });

@@ -8,15 +8,15 @@ export function AuthShell({ children, register = false }: PropsWithChildren<{ re
   return <SafeAreaView style={styles.safe}>
     <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-        <View style={styles.brand}><View style={styles.brandIcon}><MaterialIcons name="bolt" size={25} color={shop.accent} /></View><Text style={styles.brandText}>ELECTRIC SHOP</Text><Text style={styles.brandNote}>FOR YOUR HOME</Text></View>
+        <View style={styles.brand}><View style={styles.brandIcon}><MaterialIcons name="shopping-bag" size={25} color={shop.accent} /></View><Text style={styles.brandText}>SMARTSHOP</Text><Text style={styles.brandNote}>SHOP YOUR WAY</Text></View>
         <View style={[styles.hero, register && styles.compactHero]}>
-          <View style={styles.circle} /><MaterialIcons name={register ? 'spa' : 'weekend'} size={105} color="#ABC39B" style={styles.illustration} />
-          <Text style={styles.heroEyebrow}>NHÀ LÀ NƠI ĐỂ TẬN HƯỞNG</Text>
-          <Text style={styles.heroTitle}>{register ? 'Bắt đầu một\ntrải nghiệm mới.' : 'Sống tiện nghi.\nYêu từng góc nhỏ.'}</Text>
-          <Text style={styles.heroNote}>Thiết bị cho nhà. Thời gian cho bạn.</Text>
+          <View style={styles.circle} /><MaterialIcons name={register ? 'loyalty' : 'shopping-bag'} size={105} color="#a5b4fc" style={styles.illustration} />
+          <Text style={styles.heroEyebrow}>MỌI ĐIỀU BẠN CẦN, TRONG MỘT CHẠM</Text>
+          <Text style={styles.heroTitle}>{register ? 'Bắt đầu một\ntrải nghiệm mới.' : 'Mua sắm thông minh.\nSống theo cách bạn.'}</Text>
+          <Text style={styles.heroNote}>Công nghệ, thời trang và cảm hứng mỗi ngày.</Text>
         </View>
         <View style={styles.form}>{children}</View>
-        <Text style={styles.footer}>Electric Shop · Đồng hành cùng tổ ấm</Text>
+        <Text style={styles.footer}>SmartShop · Mua sắm theo cách của bạn</Text>
       </ScrollView>
     </KeyboardAvoidingView>
   </SafeAreaView>;
@@ -28,7 +28,7 @@ export function AuthField({ placeholder, secureTextEntry, ...props }: TextInputP
   return <View style={styles.field}>
     <Text style={styles.label}>{placeholder}</Text>
     <View style={[styles.inputRow, focused && styles.focused]}>
-      <TextInput {...props} placeholder={placeholder} accessibilityLabel={placeholder} placeholderTextColor="#94A098" secureTextEntry={secureTextEntry && !visible} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} style={styles.input} />
+      <TextInput {...props} placeholder={placeholder} accessibilityLabel={placeholder} placeholderTextColor="#8792a8" secureTextEntry={secureTextEntry && !visible} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} style={styles.input} />
       {secureTextEntry ? <Pressable accessibilityLabel={visible ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'} onPress={() => setVisible(!visible)} style={styles.eye}><MaterialIcons name={visible ? 'visibility-off' : 'visibility'} size={20} color={shop.muted} /></Pressable> : null}
     </View>
   </View>;
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
   brandNote: { color: shop.muted, fontSize: 7, letterSpacing: 0.8, marginLeft: 'auto' },
   hero: { backgroundColor: shop.ink, padding: 24, borderRadius: 26, minHeight: 205, overflow: 'hidden', marginBottom: 28 },
   compactHero: { minHeight: 180 },
-  circle: { width: 200, height: 200, borderRadius: 100, backgroundColor: '#2C5140', position: 'absolute', right: -65, bottom: -60 },
+  circle: { width: 200, height: 200, borderRadius: 100, backgroundColor: '#31306b', position: 'absolute', right: -65, bottom: -60 },
   illustration: { position: 'absolute', right: -10, bottom: 10, opacity: 0.35, transform: [{ rotate: '-12deg' }] },
   heroEyebrow: { color: shop.accent, fontSize: 8, fontWeight: '800', letterSpacing: 1.3 },
   heroTitle: { color: '#fff', fontWeight: '800', fontSize: 28, lineHeight: 36, letterSpacing: -0.6, marginTop: 16 },
-  heroNote: { color: '#D2DFD1', fontSize: 11, marginTop: 14 },
+  heroNote: { color: '#d9defb', fontSize: 11, marginTop: 14 },
   form: { paddingHorizontal: 2 },
   footer: { color: shop.muted, fontSize: 10, textAlign: 'center', paddingVertical: 26 },
   field: { marginBottom: 16 },

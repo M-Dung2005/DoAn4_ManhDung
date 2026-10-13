@@ -11,13 +11,14 @@ import { dateTime, money } from '../utils/format';
 
 export interface Field { name: string; label: string; kind?: 'number' | 'text' | 'textarea' | 'select' | 'switch' | 'date'; required?: boolean; rules?: Rule[]; options?: { value: string | number; label: string; disabled?: boolean }[]; disabledOnEdit?: boolean }
 interface Props<T extends object> {
+  summary?: (rows: T[], search: (value: string) => void) => ReactNode;
   title: string; idKey: keyof T & string; api: { list: () => Promise<ApiResponse<T[]>>; get: (id: number) => Promise<T>; create?: (data: Partial<T>) => Promise<unknown>; update: (id: number, data: Partial<T>) => Promise<unknown>; remove: (id: number) => Promise<unknown> };
   columns: ColumnsType<T>; fields: Field[]; defaults?: Partial<T>; searchKeys: (keyof T)[];
   rowActions?: (row: T, reload: () => Promise<void>) => ReactNode;
   filter?: { key: keyof T; options: { value: string; label: string }[]; initial?: string };
   canModify?: (row: T) => boolean; canView?: (row: T) => boolean; canDelete?: (row: T) => boolean; prepare?: (row: T) => Partial<T>; details?: (row: T) => ReactNode; editDetails?: (row: T) => ReactNode; extra?: ReactNode; editLabel?: string;
 }
-export default function ResourcePage<T extends object>({ title, idKey, api, columns, fields, defaults, searchKeys, filter, canModify = () => true, canView = () => true, canDelete = () => true, prepare, details, editDetails, extra, rowActions, editLabel = 'Sửa' }: Props<T>) {
+export default function ResourcePage<T extends object>({ summary, title, idKey, api, columns, fields, defaults, searchKeys, filter, canModify = () => true, canView = () => true, canDelete = () => true, prepare, details, editDetails, extra, rowActions, editLabel = 'Sửa' }: Props<T>) {
   const { message, modal } = App.useApp();
   const loader = useCallback(() => api.list(), [api]);
   const { data, loading, error, reload } = useLoad(loader);
@@ -43,7 +44,8 @@ export default function ResourcePage<T extends object>({ title, idKey, api, colu
   } });
   const rows = (data?.data || []).filter(row => (!filterValue || !filter || String(row[filter.key]) === filterValue) && searchKeys.some(key => String(row[key] ?? '').toLocaleLowerCase('vi').includes(search.toLocaleLowerCase('vi'))));
   const tableColumns: ColumnsType<T> = [...columns, { title: 'Thao tác', key: 'actions', render: (_, row) => <Space wrap>{rowActions?.(row, reload)}{canView(row) ? <Tooltip title="Xem chi tiết"><Button aria-label="Xem chi tiết" icon={<EyeOutlined />} disabled={busy} onClick={() => view(row, false)} /></Tooltip> : null}{canModify(row) ? <Tooltip title={editLabel}><Button aria-label={editLabel} icon={<EditOutlined />} disabled={busy} onClick={() => view(row, true)} /></Tooltip> : null}{canDelete(row) ? <Tooltip title="Xóa"><Button aria-label="Xóa" danger icon={<DeleteOutlined />} disabled={busy} onClick={() => remove(row)} /></Tooltip> : null}</Space> }];
-  return <><div className="page-heading"><h1 className="page-title">{title}</h1>{api.create && <Tooltip title="Thêm mới"><Button type="primary" aria-label="Thêm mới" icon={<PlusOutlined />} disabled={busy} onClick={() => { setEditing(null); form.resetFields(); form.setFieldsValue(defaults || {}); setOpen(true); }} /></Tooltip>}</div>
+  return <><div className="page-heading"><div><span className="eyebrow">SMARTSHOP WORKSPACE</span><h1 className="page-title">{title}</h1></div>{api.create && <Button type="primary" aria-label="Thêm mới" icon={<PlusOutlined />} disabled={busy} onClick={() => { setEditing(null); form.resetFields(); form.setFieldsValue(defaults || {}); setOpen(true); }}>Thêm mới</Button>}</div>
+    {summary?.(data?.data || [], value => { setSearch(value); setPage(1); })}
     {extra}<LoadError error={error} retry={reload} /><div className="card"><Space className="toolbar" wrap><Input.Search aria-label="Tìm kiếm" placeholder="Tìm kiếm..." allowClear value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />{filter && <Select aria-label="Lọc danh sách" placeholder="Tất cả" allowClear value={filterValue} options={filter.options} onChange={value => { setFilterValue(value); setPage(1); }} style={{ minWidth: 180 }} />}<Tooltip title="Làm mới"><Button aria-label="Làm mới" icon={<ReloadOutlined />} onClick={reload} disabled={loading} /></Tooltip></Space>
       <Table<T> rowKey={idKey} columns={tableColumns} dataSource={rows} loading={loading} scroll={{ x: 900 }} locale={{ emptyText: <Empty description="Chưa có dữ liệu" /> }} pagination={{ current: Math.min(page, Math.max(1, Math.ceil(rows.length / 10))), pageSize: 10, onChange: setPage, showSizeChanger: false }} />
     </div><Modal open={open} title={editing ? 'Chỉnh sửa' : 'Thêm mới'} onCancel={() => { if (!busy) setOpen(false); }} onOk={() => form.submit()} confirmLoading={busy} cancelButtonProps={{ disabled: busy }} okText="Lưu" cancelText="Hủy" width={720}>

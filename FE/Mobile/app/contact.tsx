@@ -72,7 +72,7 @@ export default function ContactScreen() {
         onChangeText={value => setField(key, value)}
         editable={!sending}
         placeholder={placeholder}
-        placeholderTextColor="#84938B"
+        placeholderTextColor="#8792a8"
         multiline={multiline}
         maxLength={key === 'noi_dung' ? 5000 : key === 'tieu_de' ? 200 : key === 'so_dien_thoai' ? 15 : 100}
         keyboardType={key === 'email' ? 'email-address' : key === 'so_dien_thoai' ? 'phone-pad' : 'default'}
@@ -87,7 +87,7 @@ export default function ContactScreen() {
     <SafeAreaView style={styles.safe} edges={['bottom']}>
       <KeyboardAvoidingView style={styles.safe} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-          <Pressable accessibilityLabel="Quay lại" onPress={() => router.back()} style={styles.back}><MaterialIcons name="arrow-back" size={22} color="#183C35" /><Text style={styles.backText}>Tài khoản</Text></Pressable>
+          <Pressable accessibilityLabel="Quay lại" onPress={() => router.back()} style={styles.back}><MaterialIcons name="arrow-back" size={22} color="#17213d" /><Text style={styles.backText}>Tài khoản</Text></Pressable>
           <ScreenHeading eyebrow="KẾT NỐI VỚI CỬA HÀNG" title="Gửi liên hệ" subtitle="Để lại câu hỏi hoặc góp ý, chúng tôi sẽ phản hồi sớm." icon="support-agent" />
           <View style={styles.card}>
             {notice ? <View style={styles.success}><Text accessibilityRole="alert" style={styles.successText}>{notice}</Text><Pressable accessibilityRole="button" onPress={() => router.push('/contact-history')}><Text style={styles.successText}>Xem phản hồi của tôi →</Text></Pressable></View> : null}
@@ -109,19 +109,19 @@ export default function ContactScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F2' },
+  safe: { flex: 1, backgroundColor: '#f5f6fb' },
   content: { padding: 20, gap: 16, paddingBottom: 36, width: '100%', maxWidth: 760, alignSelf: 'center' },
   back: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 40 },
-  backText: { color: '#183C35', fontSize: 14, fontWeight: '700' },
-  card: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#E3E9E1', borderRadius: 22, padding: 18, gap: 14 },
+  backText: { color: '#17213d', fontSize: 14, fontWeight: '700' },
+  card: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#e2e7f2', borderRadius: 22, padding: 18, gap: 14 },
   field: { gap: 7 },
-  label: { color: '#183C35', fontSize: 13, fontWeight: '700' },
-  input: { minHeight: 50, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 12, color: '#183C35', fontSize: 15, paddingHorizontal: 14, backgroundColor: '#FAFCF8' },
+  label: { color: '#17213d', fontSize: 13, fontWeight: '700' },
+  input: { minHeight: 50, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 12, color: '#17213d', fontSize: 15, paddingHorizontal: 14, backgroundColor: '#FAFCF8' },
   multiline: { minHeight: 140, paddingTop: 12, textAlignVertical: 'top' },
-  counter: { color: '#6D7D76', fontSize: 11, textAlign: 'right' },
-  button: { minHeight: 54, borderRadius: 14, backgroundColor: '#176B52', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 9, padding: 14, marginTop: 4 },
+  counter: { color: '#68748c', fontSize: 11, textAlign: 'right' },
+  button: { minHeight: 54, borderRadius: 14, backgroundColor: '#4f46e5', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 9, padding: 14, marginTop: 4 },
   buttonText: { color: '#fff', fontSize: 15, fontWeight: '800' },
   disabled: { opacity: 0.6 },
-  success: { padding:14,backgroundColor:'#E7F1E9',borderRadius:12,gap:10 },
-  successText: { color:'#176B52',fontSize:13,lineHeight:21,fontWeight:'600' },
+  success: { padding:14,backgroundColor:'#eef2ff',borderRadius:12,gap:10 },
+  successText: { color:'#4f46e5',fontSize:13,lineHeight:21,fontWeight:'600' },
 });

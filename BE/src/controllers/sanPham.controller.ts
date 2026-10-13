@@ -102,7 +102,7 @@ export function extractImagesInput(reqBody: any): {
   primaryImage: string | null;
   allImages: (string | { duong_dan: string; mo_ta?: string | null; la_anh_chinh?: boolean; thu_tu_hien_thi?: number })[];
 } {
-  const imagePath=(value:string)=>value.trim().replace(/^https?:\/\/[^/]+(\/uploads\/[a-f0-9-]+\.(?:jpg|png|webp))$/i,'$1');
+  const imagePath=(value:string)=>value.trim().replace(/^https?:\/\/[^/]+(\/uploads\/(?:[a-z0-9_-]+\/)*[a-z0-9_-]+\.(?:jpe?g|png|webp))$/i,'$1');
   const images = reqBody.danh_sach_hinh_anh || reqBody.images || reqBody.hinh_anh;
   let primaryImage = typeof reqBody.hinh_anh === 'string' && reqBody.hinh_anh.trim() ? imagePath(reqBody.hinh_anh) : null;
   const allImages: (string | { duong_dan: string; mo_ta?: string | null; la_anh_chinh?: boolean; thu_tu_hien_thi?: number })[] = [];

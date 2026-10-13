@@ -81,7 +81,7 @@ export default function OrderDetailScreen() {
           <Text style={styles.sectionTitle}>Tiến trình đơn hàng</Text>
           {['ChoXacNhan','DaXacNhan','DangGiao','DaGiao'].map((status,index)=>{
             const current=['ChoXacNhan','DaXacNhan','DangGiao','DaGiao'].indexOf(order.trang_thai);
-            return <Text key={status} style={[styles.date,{color:index<=current?'#176B52':'#84938B'}]}>{index<=current?'●':'○'} {statusLabel[status]}{status===order.trang_thai?' · Hiện tại':''}</Text>;
+            return <Text key={status} style={[styles.date,{color:index<=current?'#4f46e5':'#8792a8'}]}>{index<=current?'●':'○'} {statusLabel[status]}{status===order.trang_thai?' · Hiện tại':''}</Text>;
           })}
           {order.trang_thai==='DaHuy'?<Text style={styles.date}>Đơn hàng đã hủy</Text>:null}
         </View>
@@ -130,7 +130,7 @@ function OrderedProductDetails({ item }: { item: OrderItem }) {
   return <View>
     <Pressable accessibilityRole="button" accessibilityLabel={`Chi tiết ${item.ten_san_pham}, ${item.ten_bien_the || 'sản phẩm tiêu chuẩn'}`} accessibilityState={{ expanded }} onPress={() => setExpanded(value => !value)} style={styles.detailButton}>
       <Text style={styles.detailButtonText}>{expanded ? 'Thu gọn chi tiết' : 'Xem chi tiết sản phẩm'}</Text>
-      <MaterialIcons name={expanded ? 'expand-less' : 'expand-more'} size={20} color="#176B52" />
+      <MaterialIcons name={expanded ? 'expand-less' : 'expand-more'} size={20} color="#4f46e5" />
     </Pressable>
     {expanded ? <View style={styles.productDetails}>
       <Text style={styles.itemName}>Thông tin sản phẩm đã đặt</Text>
@@ -159,7 +159,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 function InfoRow({ icon, label, value }: { icon: any; label: string; value: string }) {
   return (
     <View style={styles.infoRow}>
-      <MaterialIcons name={icon} size={19} color="#176B52" />
+      <MaterialIcons name={icon} size={19} color="#4f46e5" />
       <Text style={styles.infoLabel}>{label}</Text>
       <Text style={styles.infoValue}>{value}</Text>
     </View>
@@ -167,33 +167,33 @@ function InfoRow({ icon, label, value }: { icon: any; label: string; value: stri
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F2' },
+  safe: { flex: 1, backgroundColor: '#f5f6fb' },
   content: { padding: 20, paddingBottom: 32, width: '100%', maxWidth: 760, alignSelf: 'center' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 18 },
-  eyebrow: { color: '#176B52', fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },
-  title: { color: '#183C35', fontSize: 25, fontWeight: '800', marginTop: 6 },
-  date: { color: '#6D7D76', fontSize: 12, marginTop: 5 },
+  eyebrow: { color: '#4f46e5', fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },
+  title: { color: '#17213d', fontSize: 25, fontWeight: '800', marginTop: 6 },
+  date: { color: '#68748c', fontSize: 12, marginTop: 5 },
   status: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 7, marginTop: 4 },
   statusText: { fontSize: 11, fontWeight: '800' },
   section: { backgroundColor: '#fff', borderRadius: 22, padding: 18, marginBottom: 14, borderWidth: 1, borderColor: '#EAF0E7' },
-  sectionTitle: { color: '#183C35', fontSize: 16, fontWeight: '800', marginBottom: 14 },
+  sectionTitle: { color: '#17213d', fontSize: 16, fontWeight: '800', marginBottom: 14 },
   item: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#EDF2E9' },
-  itemImage: { width: 56, height: 56, borderRadius: 12, backgroundColor: '#F6F7F2' },
+  itemImage: { width: 56, height: 56, borderRadius: 12, backgroundColor: '#f5f6fb' },
   itemInfo: { flex: 1 },
-  itemName: { color: '#183C35', fontSize: 13, fontWeight: '700' },
-  itemMeta: { color: '#6D7D76', fontSize: 12, marginTop: 4 },
-  itemTotal: { color: '#176B52', fontSize: 13, fontWeight: '800' },
+  itemName: { color: '#17213d', fontSize: 13, fontWeight: '700' },
+  itemMeta: { color: '#68748c', fontSize: 12, marginTop: 4 },
+  itemTotal: { color: '#4f46e5', fontSize: 13, fontWeight: '800' },
   detailButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12 },
-  detailButtonText: { fontSize: 12, color: '#176B52', fontWeight: '700' },
-  productDetails: { padding: 14, borderRadius: 14, backgroundColor: '#F6F7F2', marginBottom: 12 },
-  specHeading: { color: '#183C35', fontSize: 13, fontWeight: '700', marginTop: 16, marginBottom: 6 },
+  detailButtonText: { fontSize: 12, color: '#4f46e5', fontWeight: '700' },
+  productDetails: { padding: 14, borderRadius: 14, backgroundColor: '#f5f6fb', marginBottom: 12 },
+  specHeading: { color: '#17213d', fontSize: 13, fontWeight: '700', marginTop: 16, marginBottom: 6 },
   specRow: { flexDirection: 'row', gap: 12, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: '#E4EBE3' },
-  specLabel: { flex: 1, color: '#6D7D76', fontSize: 12 },
-  specValue: { flex: 1, textAlign: 'right', color: '#183C35', fontSize: 12, fontWeight: '600' },
+  specLabel: { flex: 1, color: '#68748c', fontSize: 12 },
+  specValue: { flex: 1, textAlign: 'right', color: '#17213d', fontSize: 12, fontWeight: '600' },
   totalRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, marginTop: 2 },
-  totalLabel: { color: '#6D7D76', fontSize: 13 },
-  total: { color: '#183C35', fontSize: 19, fontWeight: '800' },
+  totalLabel: { color: '#68748c', fontSize: 13 },
+  total: { color: '#17213d', fontSize: 19, fontWeight: '800' },
   infoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 9, paddingVertical: 9 },
-  infoLabel: { color: '#6D7D76', fontSize: 12, width: 88 },
-  infoValue: { color: '#183C35', fontSize: 13, fontWeight: '700', flex: 1, textAlign: 'right' },
+  infoLabel: { color: '#68748c', fontSize: 12, width: 88 },
+  infoValue: { color: '#17213d', fontSize: 13, fontWeight: '700', flex: 1, textAlign: 'right' },
 });

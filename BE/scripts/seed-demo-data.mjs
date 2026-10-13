@@ -35,7 +35,7 @@ async function imgs(query) {
   let out = [];
   for (let attempt = 0; attempt < 3 && !out.length; attempt++) {
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': 'ElectricShopSeed/1.0 (student project)' } });
+      const r = await fetch(url, { headers: { 'User-Agent': 'SmartShopSeed/1.0 (student project)' } });
       const j = await r.json();
       const pages = Object.values(j.query?.pages || {}).sort((a, b) => a.index - b.index);
       out = pages
@@ -374,7 +374,7 @@ const allProd = await q('SELECT ma_san_pham id,ten_san_pham n FROM san_pham');
 // ================= 15. thong_bao (bo sung neu chua du; trigger don_hang da tu them) =================
 {
   const need = TARGET - (await count('thong_bao'));
-  const T = [['Khuyến mãi', 'Giảm đến 20% cho các sản phẩm gia dụng trong tuần này.'], ['Voucher mới', 'Bạn vừa nhận được voucher giảm giá cho đơn tiếp theo.'], ['Hệ thống', 'Cảm ơn bạn đã sử dụng ứng dụng ElectricShop.'], ['Sản phẩm mới', 'Nhiều sản phẩm mới vừa được cập nhật, xem ngay!']];
+  const T = [['Khuyến mãi', 'Giảm đến 20% cho các sản phẩm gia dụng trong tuần này.'], ['Voucher mới', 'Bạn vừa nhận được voucher giảm giá cho đơn tiếp theo.'], ['Hệ thống', 'Cảm ơn bạn đã sử dụng ứng dụng SmartShop.'], ['Sản phẩm mới', 'Nhiều sản phẩm mới vừa được cập nhật, xem ngay!']];
   const rows = [];
   for (let i = 0; i < Math.max(0, need); i++) { const t = pick(T); rows.push([pick(customers).id, t[0], t[1], rnd() < 0.5 ? 1 : 0, daysAgo(ri(1, 30))]); }
   await bulk('INSERT INTO thong_bao (ma_tai_khoan,tieu_de,noi_dung,da_doc,ngay_tao) VALUES ?', rows);

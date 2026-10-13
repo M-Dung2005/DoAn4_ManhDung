@@ -11,6 +11,8 @@ import {
   Input,
   InputNumber,
   Modal,
+  Pagination,
+  Segmented,
   Select,
   Space,
   Table,
@@ -19,7 +21,7 @@ import {
   Typography,
   Upload,
 } from 'antd';
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, BarsOutlined, DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
 import { productApi } from '../api/product.api';
 import { api } from '../api/api';
 import { categoryApi } from '../api/category.api';
@@ -31,6 +33,10 @@ import { money, options, Status } from '../utils/format';
 import type { CategorySpecification, Product, ProductImage, ProductInput, ProductVariant } from '../types';
 
 const { Text } = Typography;
+
+function ShopPlaceholder() {
+  return <div className="admin-product-placeholder"><AppstoreOutlined /><span>SmartShop</span></div>;
+}
 
 function generatedVariantSku(productCode: string, variantName: string, index: number) {
   const suffix = variantName
@@ -48,6 +54,7 @@ function variantSpecValue(variant: ProductVariant, specId: number) {
 }
 
 export default function ProductsPage() {
+  const [viewMode, setViewMode] = useState<string | number>('grid');
   const { message, modal } = App.useApp();
   const [query, setQuery] = useState({
     search: '',
@@ -378,6 +385,8 @@ export default function ProductsPage() {
       <LoadError error={products.error} retry={products.reload} />
       <LoadError error={references.error} retry={references.reload} />
 
+      <div className="catalog-overview"><div><span>SẢN PHẨM</span><strong>{products.data?.pagination?.total ?? '—'}</strong><small>Theo bộ lọc hiện tại</small></div><div><span>DANH MỤC</span><strong>{references.data?.categories.filter(c => c.trang_thai).length ?? '—'}</strong><small>Ngành hàng đang hoạt động</small></div><div><span>THƯƠNG HIỆU</span><strong>{references.data?.brands.length ?? '—'}</strong><small>Thương hiệu trong hệ thống</small></div></div>
+
       <div className="card">
         <Space wrap className="toolbar">
           <Input.Search
@@ -403,9 +412,10 @@ export default function ProductsPage() {
             onChange={ma_thuong_hieu => setQuery(q => ({ ...q, ma_thuong_hieu, page: 1 }))}
           />
           <Button onClick={products.reload}>Làm mới</Button>
+          <Segmented aria-label="Kiểu hiển thị sản phẩm" value={viewMode} onChange={setViewMode} options={[{ value: 'grid', label: 'Lưới', icon: <AppstoreOutlined /> }, { value: 'table', label: 'Bảng', icon: <BarsOutlined /> }]} />
         </Space>
 
-        <Table<Product>
+        {viewMode === 'grid' ? <><div className="admin-product-grid" aria-busy={products.loading}>{(products.data?.data || []).map(row => <article className="admin-product-card" key={row.ma_san_pham}><div className="admin-product-image">{row.hinh_anh ? <Image src={row.hinh_anh} alt={row.ten_san_pham} width="100%" height={190} style={{ objectFit: 'contain' }} /> : <ShopPlaceholder />}<span className="admin-product-code">{row.ma_san_pham_code}</span></div><div className="admin-product-copy"><span className="eyebrow">{row.ten_danh_muc} · {row.ten_thuong_hieu}</span><h3>{row.ten_san_pham}</h3><div className="admin-product-price"><strong>{money(row.gia_ban)}</strong><Status value={row.trang_thai} /></div><p>{row.so_luong} sản phẩm trong kho</p><Space wrap><Tooltip title="Xem chi tiết"><Button aria-label="Xem chi tiết" icon={<EyeOutlined />} onClick={() => viewDetail(row)} /></Tooltip><Tooltip title="Thêm biến thể"><Button aria-label="Thêm biến thể" disabled={busy} icon={<PlusOutlined />} onClick={() => addVariant(row)} /></Tooltip><Tooltip title="Sửa sản phẩm"><Button aria-label="Sửa sản phẩm" disabled={busy} icon={<EditOutlined />} onClick={() => edit(row)} /></Tooltip><Tooltip title="Xóa sản phẩm"><Button aria-label="Xóa sản phẩm" danger disabled={busy} icon={<DeleteOutlined />} onClick={() => remove(row)} /></Tooltip></Space></div></article>)}</div>{products.loading ? <p role="status">Đang tải sản phẩm...</p> : !products.data?.data?.length ? <Empty description="Chưa có sản phẩm" /> : null}<Pagination className="catalog-pagination" current={query.page} pageSize={query.limit} total={products.data?.pagination?.total || 0} showSizeChanger onChange={(page, limit) => setQuery(q => ({ ...q, page: limit !== q.limit ? 1 : page, limit }))} /></> : <Table<Product>
           rowKey="ma_san_pham"
           loading={products.loading}
           dataSource={products.data?.data || []}
@@ -425,7 +435,7 @@ export default function ProductsPage() {
               render: (value, row) => {
                 const count = row.danh_sach_hinh_anh?.length || (value ? 1 : 0);
                 return value ? (
-                  <Badge count={count > 1 ? `${count} ảnh` : 0} offset={[-8, 8]} style={{ backgroundColor: '#176b52' }}>
+                  <Badge count={count > 1 ? `${count} ảnh` : 0} offset={[-8, 8]} style={{ backgroundColor: '#4f46e5' }}>
                     <Image width={54} height={54} style={{ objectFit: 'cover', borderRadius: 8 }} src={value} alt="Ảnh sản phẩm" />
                   </Badge>
                 ) : (
@@ -467,7 +477,7 @@ export default function ProductsPage() {
               ),
             },
           ]}
-        />
+        />}
       </div>
 
       {/* Modal View Detail */}
@@ -528,7 +538,7 @@ export default function ProductsPage() {
             )}
 
             {/* Specifications grouped */}
-            <h4>Thông số kỹ thuật</h4>
+            <h4>Thuộc tính sản phẩm</h4>
             {detailProduct.specifications && detailProduct.specifications.length > 0 ? (
               detailProduct.specifications.map(group => (
                 <Card key={group.group} size="small" title={group.group} style={{ marginBottom: 12 }}>
@@ -669,7 +679,7 @@ export default function ProductsPage() {
                   <div
                     key={idx}
                     style={{
-                      border: img.la_anh_chinh ? '2px solid #176b52' : '1px solid #d9d9d9',
+                      border: img.la_anh_chinh ? '2px solid #4f46e5' : '1px solid #d9d9d9',
                       borderRadius: 10,
                       padding: 6,
                       background: img.la_anh_chinh ? '#f2f8f5' : '#fafafa',
@@ -730,7 +740,7 @@ export default function ProductsPage() {
                   <label><Text type="secondary" style={{ display: 'block', fontSize: 12 }}>Trạng thái</Text><Select value={variant.trang_thai} placeholder="Chọn trạng thái" options={options(['DangBan', 'HetHang', 'NgungBan'])} onChange={value => setVariants(current => current.map((item, i) => i === index ? { ...item, trang_thai: value } : item))} style={{ width: 130 }} /></label>
                   <Tooltip title="Xóa biến thể"><Button danger type="text" aria-label="Xóa biến thể" icon={<DeleteOutlined />} onClick={() => setVariants(current => current.filter((_, i) => i !== index))} style={{ marginTop: 20 }} /></Tooltip>
                 </Space>
-                {categorySpecs.length > 0 ? <div style={{ marginTop: 12 }}><Text strong style={{ display: 'block', marginBottom: 8 }}>Thông số kỹ thuật của biến thể</Text><div className="form-grid">{categorySpecs.map(spec => {
+                {categorySpecs.length > 0 ? <div style={{ marginTop: 12 }}><Text strong style={{ display: 'block', marginBottom: 8 }}>Thuộc tính sản phẩm của biến thể</Text><div className="form-grid">{categorySpecs.map(spec => {
                   const value = variantSpecValue(variant, spec.ma_thong_so);
                   const update = (raw: unknown) => setVariants(current => current.map((item, i) => {
                     if (i !== index) return item;
@@ -762,7 +772,7 @@ export default function ProductsPage() {
           <div style={{ display: variantMode ? 'none' : undefined }}>
           {/* Dynamic Specifications by Category */}
           <Divider orientation="left">
-            Thông số kỹ thuật {categorySpecs.length > 0 ? `(${categorySpecs.length} thông số theo danh mục)` : ''}
+            Thuộc tính sản phẩm {categorySpecs.length > 0 ? `(${categorySpecs.length} thông số theo danh mục)` : ''}
           </Divider>
 
           {specsLoading ? (
@@ -771,7 +781,7 @@ export default function ProductsPage() {
             <div>
               {Object.entries(groupedCategorySpecs).map(([groupName, specs]) => (
                 <div key={groupName} style={{ marginBottom: 16 }}>
-                  <h4 style={{ color: '#176b52', marginBottom: 10, borderBottom: '1px solid #e8f0eb', paddingBottom: 4 }}>
+                  <h4 style={{ color: '#4f46e5', marginBottom: 10, borderBottom: '1px solid #e8f0eb', paddingBottom: 4 }}>
                     {groupName}
                   </h4>
                   <div className="form-grid">

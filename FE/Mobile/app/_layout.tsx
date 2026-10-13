@@ -9,6 +9,7 @@ import { shop } from '@/constants/shop-theme';
 import { authService } from '@/services/auth.service';
 import { isStoredMobileStaff } from '@/utils/mobile-access';
 import { ContactReplyNotice } from '@/components/contact-reply-notice';
+import { ChatbotLauncher } from '@/components/chatbot-launcher';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -53,8 +54,12 @@ export default function RootLayout() {
         <Stack.Screen name="account-tools" options={{ title: 'Đổi mật khẩu' }} />
         <Stack.Screen name="vouchers" options={{ title: 'Voucher của tôi', headerBackTitle: 'Quay lại' }} />
         <Stack.Screen name="orders" options={{ title: 'Đơn hàng của tôi' }} />
+        <Stack.Screen name="rewards" options={{ title: 'Điểm danh & Quà tặng' }} />
+        <Stack.Screen name="referral" options={{ title: 'Mời bạn bè nhận 50K' }} />
+        <Stack.Screen name="chatbot" options={{ title: 'Trợ lý AI', headerBackTitle: 'Quay lại' }} />
       </Stack>
       {routeGroup !== '(auth)' ? <ContactReplyNotice /> : null}
+      <ChatbotLauncher />
       <StatusBar style="dark" />
     </ThemeProvider>
   );

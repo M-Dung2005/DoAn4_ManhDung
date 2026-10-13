@@ -165,7 +165,7 @@ function CheckoutContent({ initialSelection }: { initialSelection: CheckoutSelec
 
   const field = (key: keyof Form, label: string, placeholder: string, maxLength: number, multiline = false) => <View style={styles.field} key={key}>
     <Text style={styles.label}>{label}</Text>
-    <TextInput editable={!checking && !submitting} accessibilityLabel={label} value={form[key]} onChangeText={value => change(key, value)} placeholder={placeholder} placeholderTextColor="#84938B" maxLength={maxLength} multiline={multiline} keyboardType={key === 'so_dien_thoai' ? 'phone-pad' : 'default'} autoComplete={key === 'so_dien_thoai' ? 'tel' : key === 'ho_ten_nguoi_nhan' ? 'name' : 'off'} style={[styles.input, multiline && styles.multiline, Boolean(fieldErrors[key]) && styles.invalid]} />
+    <TextInput editable={!checking && !submitting} accessibilityLabel={label} value={form[key]} onChangeText={value => change(key, value)} placeholder={placeholder} placeholderTextColor="#8792a8" maxLength={maxLength} multiline={multiline} keyboardType={key === 'so_dien_thoai' ? 'phone-pad' : 'default'} autoComplete={key === 'so_dien_thoai' ? 'tel' : key === 'ho_ten_nguoi_nhan' ? 'name' : 'off'} style={[styles.input, multiline && styles.multiline, Boolean(fieldErrors[key]) && styles.invalid]} />
     {fieldErrors[key] ? <Text accessibilityRole="alert" style={styles.errorText}>{fieldErrors[key]}</Text> : null}
   </View>;
 
@@ -201,7 +201,7 @@ function CheckoutContent({ initialSelection }: { initialSelection: CheckoutSelec
         </View>
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>Giao hàng & thanh toán</Text>
-          <View style={styles.payment}><MaterialIcons name="radio-button-checked" size={23} color="#176B52" /><View style={{ flex: 1 }}><Text style={styles.name}>Thanh toán khi nhận hàng (COD)</Text><Text style={styles.muted}>Trả tiền cho nhân viên giao hàng khi nhận đơn. Bạn chưa cần thanh toán lúc đặt hàng.</Text></View></View>
+          <View style={styles.payment}><MaterialIcons name="radio-button-checked" size={23} color="#4f46e5" /><View style={{ flex: 1 }}><Text style={styles.name}>Thanh toán khi nhận hàng (COD)</Text><Text style={styles.muted}>Trả tiền cho nhân viên giao hàng khi nhận đơn. Bạn chưa cần thanh toán lúc đặt hàng.</Text></View></View>
           <View style={styles.notice}><Text style={styles.muted}>Giao hàng tiêu chuẩn · {quote.phi_giao_hang === 0 ? 'Miễn phí giao hàng' : `Phí giao hàng ${formatCurrency(quote.phi_giao_hang)}`}. Cửa hàng sẽ liên hệ xác nhận đơn và thời gian giao phù hợp.</Text></View>
         </View>
         <View style={styles.card}>
@@ -218,7 +218,7 @@ function CheckoutContent({ initialSelection }: { initialSelection: CheckoutSelec
           {quote.giam_gia ? <View style={styles.row}><Text style={styles.muted}>Giảm giá</Text><Text style={styles.link}>−{formatCurrency(quote.giam_gia)}</Text></View> : null}
           <View style={styles.row}><Text style={styles.muted}>Phí giao hàng</Text><Text style={styles.link}>{quote.phi_giao_hang === 0 ? 'Miễn phí' : formatCurrency(quote.phi_giao_hang)}</Text></View>
           <View style={[styles.row, styles.total]}><Text style={styles.name}>Tổng thanh toán khi nhận hàng</Text><Text style={styles.totalAmount}>{formatCurrency(quote.tong_tien)}</Text></View>
-          {review ? <Pressable accessibilityRole="checkbox" accessibilityState={{ checked: confirmed, disabled: submitting || uncertain }} disabled={submitting || uncertain} onPress={() => setConfirmed(value => !value)} style={styles.payment}><MaterialIcons name={confirmed ? 'check-box' : 'check-box-outline-blank'} color="#176B52" size={24} /><Text style={[styles.muted, { flex: 1 }]}>Tôi đã kiểm tra thông tin nhận hàng, sản phẩm và tổng tiền phải trả.</Text></Pressable> : null}
+          {review ? <Pressable accessibilityRole="checkbox" accessibilityState={{ checked: confirmed, disabled: submitting || uncertain }} disabled={submitting || uncertain} onPress={() => setConfirmed(value => !value)} style={styles.payment}><MaterialIcons name={confirmed ? 'check-box' : 'check-box-outline-blank'} color="#4f46e5" size={24} /><Text style={[styles.muted, { flex: 1 }]}>Tôi đã kiểm tra thông tin nhận hàng, sản phẩm và tổng tiền phải trả.</Text></Pressable> : null}
           <Pressable accessibilityRole="button" accessibilityLabel={checking ? 'Đang kiểm tra giá và tồn kho' : submitting ? 'Đang gửi yêu cầu' : uncertain ? 'Kiểm tra lại đơn' : review ? 'Xác nhận đặt hàng COD' : 'Kiểm tra đơn hàng'} disabled={checking || submitting || !quote.can_checkout || (review && !confirmed)} style={[styles.button, (checking || submitting || !quote.can_checkout || (review && !confirmed)) && styles.disabled]} onPress={review ? submit : checkForm}>
             <Text style={styles.buttonText}>{checking ? 'Đang kiểm tra giá và tồn kho...' : submitting ? 'Đang gửi yêu cầu...' : uncertain ? 'Kiểm tra lại đơn' : review ? 'Xác nhận đặt hàng COD' : 'Kiểm tra đơn hàng'}</Text><MaterialIcons name="arrow-forward" size={20} color="#fff" />
           </Pressable>
@@ -230,14 +230,14 @@ function CheckoutContent({ initialSelection }: { initialSelection: CheckoutSelec
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7F2' }, content: { padding: 20, gap: 16, width: '100%', maxWidth: 820, alignSelf: 'center', paddingBottom: 40 },
-  eyebrow: { color: '#176B52', fontSize: 10, fontWeight: '800', letterSpacing: 2 }, title: { color: '#183C35', fontSize: 28, fontWeight: '800' },
-  card: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#E3E9E1', borderRadius: 22, padding: 20, gap: 14 }, sectionTitle: { color: '#183C35', fontSize: 17, fontWeight: '800', flexShrink: 1 },
-  field: { gap: 7 }, label: { color: '#183C35', fontSize: 13, fontWeight: '700' }, input: { minHeight: 50, paddingHorizontal: 14, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 12, color: '#183C35', fontSize: 15, backgroundColor: '#FAFCF8' },
+  safe: { flex: 1, backgroundColor: '#f5f6fb' }, content: { padding: 20, gap: 16, width: '100%', maxWidth: 820, alignSelf: 'center', paddingBottom: 40 },
+  eyebrow: { color: '#4f46e5', fontSize: 10, fontWeight: '800', letterSpacing: 2 }, title: { color: '#17213d', fontSize: 28, fontWeight: '800' },
+  card: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#e2e7f2', borderRadius: 22, padding: 20, gap: 14 }, sectionTitle: { color: '#17213d', fontSize: 17, fontWeight: '800', flexShrink: 1 },
+  field: { gap: 7 }, label: { color: '#17213d', fontSize: 13, fontWeight: '700' }, input: { minHeight: 50, paddingHorizontal: 14, borderWidth: 1, borderColor: '#D9E2D8', borderRadius: 12, color: '#17213d', fontSize: 15, backgroundColor: '#FAFCF8' },
   multiline: { minHeight: 80, paddingTop: 12, textAlignVertical: 'top' }, invalid: { borderColor: '#BC4545' }, errorText: { color: '#A52D2D', fontSize: 13, lineHeight: 20 }, errorBox: { backgroundColor: '#FBEDEC', padding: 16, borderRadius: 12 },
-  muted: { color: '#6D7D76', fontSize: 13, lineHeight: 21 }, hint: { color: '#6D7D76', fontSize: 12, lineHeight: 19 }, link: { color: '#176B52', fontSize: 13, fontWeight: '700', paddingVertical: 6 },
-  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }, name: { color: '#183C35', fontSize: 14, fontWeight: '700', lineHeight: 21 },
-  product: { flexDirection: 'row', gap: 12, alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderColor: '#EAF0E7', flexWrap: 'wrap' }, image: { width: 56, height: 56, borderRadius: 10 }, amount: { color: '#183C35', fontWeight: '700', fontSize: 13 },
-  payment: { flexDirection: 'row', gap: 12, alignItems: 'center', paddingVertical: 10 }, notice: { padding: 14, backgroundColor: '#EDF4E9', borderRadius: 12, gap: 8 }, total: { borderTopWidth: 1, borderColor: '#E3E9E1', paddingTop: 16 }, totalAmount: { color: '#176B52', fontSize: 24, fontWeight: '800' },
-  button: { minHeight: 54, backgroundColor: '#176B52', borderRadius: 14, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, padding: 14 }, buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 }, disabled: { opacity: 0.5 },
+  muted: { color: '#68748c', fontSize: 13, lineHeight: 21 }, hint: { color: '#68748c', fontSize: 12, lineHeight: 19 }, link: { color: '#4f46e5', fontSize: 13, fontWeight: '700', paddingVertical: 6 },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }, name: { color: '#17213d', fontSize: 14, fontWeight: '700', lineHeight: 21 },
+  product: { flexDirection: 'row', gap: 12, alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderColor: '#EAF0E7', flexWrap: 'wrap' }, image: { width: 56, height: 56, borderRadius: 10 }, amount: { color: '#17213d', fontWeight: '700', fontSize: 13 },
+  payment: { flexDirection: 'row', gap: 12, alignItems: 'center', paddingVertical: 10 }, notice: { padding: 14, backgroundColor: '#EDF4E9', borderRadius: 12, gap: 8 }, total: { borderTopWidth: 1, borderColor: '#e2e7f2', paddingTop: 16 }, totalAmount: { color: '#4f46e5', fontSize: 24, fontWeight: '800' },
+  button: { minHeight: 54, backgroundColor: '#4f46e5', borderRadius: 14, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, padding: 14 }, buttonText: { color: '#fff', fontWeight: '800', fontSize: 15 }, disabled: { opacity: 0.5 },
 });

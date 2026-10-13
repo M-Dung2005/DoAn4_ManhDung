@@ -1,17 +1,17 @@
 export const shop = {
-  background: '#F6F7F2',
+  background: '#f5f6fb',
   surface: '#FFFFFF',
-  ink: '#183C35',
-  muted: '#6D7D76',
-  primary: '#176B52',
-  soft: '#E7F1E9',
-  border: '#E3E9E1',
-  accent: '#DDF3A3',
+  ink: '#17213d',
+  muted: '#68748c',
+  primary: '#4f46e5',
+  soft: '#eef2ff',
+  border: '#e2e7f2',
+  accent: '#c4b5fd',
   danger: '#BC4545',
 };
 
 export const cardShadow = {
-  shadowColor: '#183C35',
+  shadowColor: '#17213d',
   shadowOffset: { width: 0, height: 4 },
   shadowOpacity: 0.04,
   shadowRadius: 16,

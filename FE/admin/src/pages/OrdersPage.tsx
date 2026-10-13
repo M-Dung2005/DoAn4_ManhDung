@@ -31,12 +31,12 @@ export default function OrdersPage() {
       ['Giảm giá', money(detail.giam_gia || 0)], ['Phí giao hàng', money(detail.phi_giao_hang || 0)], ['Tổng thanh toán', money(detail.tong_tien)],
     ].map(([label, children]) => ({ key: String(label), label, children: children || '—' }))} />
     <h3 className="mt">Sản phẩm đã đặt</h3>
-    {detail.trang_thai === 'DangGiao' ? <p style={{color:'#176B52'}}>Đang chờ khách hàng xác nhận đã nhận hàng trên ứng dụng. Đơn sẽ chuyển sang Đã giao sau khi khách xác nhận.</p> : null}
+    {detail.trang_thai === 'DangGiao' ? <p style={{color:'#4f46e5'}}>Đang chờ khách hàng xác nhận đã nhận hàng trên ứng dụng. Đơn sẽ chuyển sang Đã giao sau khi khách xác nhận.</p> : null}
     <Table<OrderItem> key={detail.ma_don_hang} rowKey={row=>`${row.ma_san_pham}:${row.ma_bien_the || 0}`} dataSource={detail.items || []} pagination={false} scroll={{ x: 650 }}
       expandable={{ expandedRowRender: row => <OrderedProductDetails item={row} />, columnWidth: 150,
         expandIcon: ({ expanded, onExpand, record }) => <Button type="link" size="small" aria-expanded={expanded} onClick={event => onExpand(record, event)}>{expanded ? 'Thu gọn chi tiết' : 'Xem chi tiết sản phẩm'}</Button> }}
       columns={[
-        { title: 'Sản phẩm', render: (_, row) => <Space align="start">{row.hinh_anh ? <Image src={row.hinh_anh} alt={row.ten_san_pham} width={48} height={48} style={{objectFit:'contain',borderRadius:8}} /> : <span style={{color:'#84938B'}}>Không có ảnh</span>}<span>{row.ten_san_pham}</span></Space> },
+        { title: 'Sản phẩm', render: (_, row) => <Space align="start">{row.hinh_anh ? <Image src={row.hinh_anh} alt={row.ten_san_pham} width={48} height={48} style={{objectFit:'contain',borderRadius:8}} /> : <span style={{color:'#8792a8'}}>Không có ảnh</span>}<span>{row.ten_san_pham}</span></Space> },
         { title: 'Biến thể', dataIndex: 'ten_bien_the', render: value => value || 'Tiêu chuẩn' },
         { title: 'Số lượng', dataIndex: 'so_luong' }, { title: 'Đơn giá', dataIndex: 'don_gia', render: money },
         { title: 'Thành tiền', render: (_,row) => money(row.thanh_tien ?? Number(row.don_gia)*row.so_luong) },

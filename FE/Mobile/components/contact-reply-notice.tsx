@@ -60,11 +60,11 @@ export function ContactReplyNotice() {
   </View>;
 }
 const styles = StyleSheet.create({
-  banner: { position:'absolute',left:16,right:16,zIndex:1000,elevation:12,maxWidth:700,alignSelf:'center',padding:16,borderRadius:16,backgroundColor:'#E7F1E9',borderWidth:1,borderColor:'#BCD6C6',gap:8 },
-  title: { color:'#176B52',fontSize:14,fontWeight:'800' },
-  body: { color:'#183C35',fontSize:13,lineHeight:20 },
+  banner: { position:'absolute',left:16,right:16,zIndex:1000,elevation:12,maxWidth:700,alignSelf:'center',padding:16,borderRadius:16,backgroundColor:'#eef2ff',borderWidth:1,borderColor:'#BCD6C6',gap:8 },
+  title: { color:'#4f46e5',fontSize:14,fontWeight:'800' },
+  body: { color:'#17213d',fontSize:13,lineHeight:20 },
   actions: { flexDirection:'row',justifyContent:'space-between',gap:16 },
   button: { paddingVertical:8,paddingHorizontal:4 },
-  link: { color:'#176B52',fontSize:13,fontWeight:'700' },
+  link: { color:'#4f46e5',fontSize:13,fontWeight:'700' },
   error: { color:'#A52D2D',fontSize:12 },
 });

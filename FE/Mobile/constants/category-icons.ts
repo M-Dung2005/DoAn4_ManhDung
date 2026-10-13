@@ -4,6 +4,15 @@ import type MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIco
 type CategoryIcon = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const categoryIcons: Record<string, CategoryIcon> = {
+  'điện thoại & phụ kiện': 'cellphone',
+  'máy tính & văn phòng': 'laptop',
+  'âm thanh & công nghệ': 'headphones',
+  'thời trang': 'tshirt-crew',
+  'giày dép & túi xách': 'shoe-sneaker',
+  'làm đẹp & chăm sóc': 'bottle-tonic-outline',
+  'nhà cửa & đời sống': 'lamp',
+  'thể thao & ngoài trời': 'basketball',
+  'sách & văn phòng phẩm': 'book-open-page-variant',
   'tủ lạnh': 'fridge',
   'tủ đông': 'fridge-industrial',
   'tủ mát': 'fridge-outline',
@@ -56,5 +65,5 @@ const categoryIcons: Record<string, CategoryIcon> = {
 };
 
 export function getCategoryIcon(name: string): CategoryIcon {
-  return categoryIcons[name.normalize('NFC').trim().toLocaleLowerCase('vi-VN')] || 'devices';
+  return categoryIcons[name.normalize('NFC').trim().toLocaleLowerCase('vi-VN')] || 'shopping-outline';
 }

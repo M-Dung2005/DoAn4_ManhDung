@@ -33,13 +33,13 @@ export function ConfirmReceiptButton({ orderId, onConfirmed }: { orderId: number
 }
 
 const styles = StyleSheet.create({
-  hint: { color:'#6D7D76',fontSize:13,lineHeight:21,marginBottom:12 },
-  primary: { backgroundColor:'#176B52',padding:16,borderRadius:12,alignItems:'center' },
+  hint: { color:'#68748c',fontSize:13,lineHeight:21,marginBottom:12 },
+  primary: { backgroundColor:'#4f46e5',padding:16,borderRadius:12,alignItems:'center' },
   buttonText: { color:'#fff',fontWeight:'700',fontSize:14 },
   secondary: { padding:14,alignItems:'center',borderWidth:1,borderColor:'#DAE5DD',borderRadius:12 },
-  secondaryText: { color:'#176B52',fontWeight:'700' },
+  secondaryText: { color:'#4f46e5',fontWeight:'700' },
   overlay: { flex:1,backgroundColor:'#00000066',alignItems:'center',justifyContent:'center',padding:24 },
   card: { backgroundColor:'#fff',padding:24,borderRadius:22,width:'100%',maxWidth:440,gap:12 },
-  title: { color:'#183C35',fontSize:21,fontWeight:'800' },
+  title: { color:'#17213d',fontSize:21,fontWeight:'800' },
   error: { color:'#A52D2D',fontSize:13,lineHeight:20 },
 });

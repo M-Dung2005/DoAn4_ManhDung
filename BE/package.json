@@ -1,10 +1,11 @@
 {
-  "name": "appelectricshop-be",
+  "name": "smartshop-be",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "npm run build && node --test tests/*.test.mjs",
+    "verify:admin": "npm run build && node scripts/verify-admin.mjs",
     "dev": "tsx watch src/app.ts",
     "build": "tsc -p tsconfig.json",
     "migrate": "npm run build && node scripts/migrate.mjs",
@@ -12,9 +13,13 @@
     "migrate:permissions": "npm run build && node scripts/migrate-permissions.mjs",
     "migrate:collations": "npm run build && node scripts/migrate-collations.mjs",
     "start": "node dist/app.js",
-    "seed": "node scripts/seed-demo-data.mjs",
-    "seed:options": "npm run build && node scripts/seed-product-options.mjs --apply",
-    "seed:specifications": "npm run build && node scripts/seed-product-specifications.mjs"
+    "seed": "node scripts/setup-smartshop.mjs --apply --seed-only",
+    "seed:accounts": "node scripts/seed-smartshop-accounts.mjs",
+    "expand:catalog": "node scripts/expand-smartshop-catalog.mjs",
+    "backfill:inventory": "node scripts/backfill-smartshop-inventory.mjs",
+    "setup:smartshop": "node scripts/setup-smartshop.mjs",
+    "init:smartshop": "node scripts/setup-smartshop.mjs --apply --from-schema",
+    "assets:smartshop": "node scripts/download-smartshop-images.mjs"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

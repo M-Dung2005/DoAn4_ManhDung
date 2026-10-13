@@ -16,7 +16,7 @@ test('customer is rejected, staff menus and routes are restricted', async ({ pag
   await page.goto('/employees'); await expect(page.getByText('Bạn không có quyền truy cập trang này')).toBeVisible();
 });
 test('401 clears the session and redirects to login', async ({ page }) => {
-  const mock = await mockApi(page); await page.goto('/products'); await expect(page.getByRole('cell', { name: 'Nồi cơm điện' })).toBeVisible(); mock.expire();
+  const mock = await mockApi(page); await page.goto('/products'); await expect(page.getByRole('heading', { name: 'Nồi cơm điện' })).toBeVisible(); mock.expire();
   await page.getByRole('button', { name: 'Làm mới' }).click(); await expect(page).toHaveURL(/login/);
   expect(await page.evaluate(() => localStorage.getItem('admin_token'))).toBeNull();
 });
@@ -36,6 +36,7 @@ test('product CRUD preserves technical details and uses real reference IDs', asy
   const mock = await mockApi(page); await page.goto('/products');
   await page.getByRole('button', { name: 'Sửa sản phẩm', exact: true }).click(); await expect(page.getByLabel('Công suất')).toHaveValue('700W'); await page.getByLabel('Công suất').fill('900W'); await page.getByRole('button', { name: 'Lưu', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0); expect(mock.requests.find(r => r.resource === 'san-pham' && r.method === 'PUT')?.body.thong_so).toEqual([{ma_thong_so:3,gia_tri:'900W',gia_tri_so:null,gia_tri_bool:null}]);
+  await page.getByText('Bảng', { exact: true }).click();
   await page.getByRole('button', { name: 'Thêm sản phẩm', exact: true }).click(); await page.getByLabel('Mã sản phẩm', { exact: true }).fill('SP-NEW'); await page.getByLabel('Tên sản phẩm', { exact: true }).fill('Ấm điện mới');
   await page.getByLabel('Danh mục', { exact: true }).click(); await page.getByTitle('Gia dụng', { exact: true }).last().click(); await page.getByLabel('Thương hiệu', { exact: true }).click(); await page.getByTitle('Thương hiệu mẫu', { exact: true }).last().click();
   await page.getByLabel('Giá bán (VNĐ)', { exact: true }).fill('500000'); await page.getByRole('button', { name: 'Lưu', exact: true }).click(); await expect(page.getByRole('cell', { name: 'Ấm điện mới' })).toBeVisible();

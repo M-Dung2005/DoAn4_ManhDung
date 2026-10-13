@@ -14,9 +14,9 @@ test('checkout transactions against an isolated MySQL database', { skip: process
     await admin.query(`USE \`${database}\``);
     const schema = await readFile(new URL('../database/database.sql', import.meta.url), 'utf8');
     await admin.query(schema.slice(schema.indexOf('CREATE TABLE tai_khoan'), schema.indexOf('INSERT INTO tai_khoan')));
-    const productSchema = await readFile(new URL('../database/upgrade_product_management_migration_fixed.sql', import.meta.url), 'utf8');
+    const productSchema = await readFile(new URL('../database/smartshop-schema.sql', import.meta.url), 'utf8');
     for (const table of ['nhom_thong_so','thong_so','danh_muc_thong_so','thong_so_san_pham']) {
-      const definition = productSchema.match(new RegExp('CREATE TABLE ' + table + ' \\([\\s\\S]*?ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;'))?.[0];
+      const definition = productSchema.match(new RegExp('CREATE TABLE `' + table + '` \\([\\s\\S]*?ENGINE=InnoDB[^;]*;'))?.[0];
       assert.ok(definition); await admin.query(definition);
     }
     // Order-detail authorization calls this routine before checking the owner.
@@ -28,7 +28,8 @@ test('checkout transactions against an isolated MySQL database', { skip: process
     await admin.query(listProcedure.slice(0, -2));
     process.env.DB_NAME = database;
     ({ pool } = await import('../dist/config/database.js'));
-    await admin.query(await readFile(new URL('../migrations/005_product_variants.sql', import.meta.url), 'utf8'));
+    const { PRODUCT_VARIANTS_SQL } = await import('../scripts/schema-constants.mjs');
+    await admin.query(PRODUCT_VARIANTS_SQL);
     const { migrateCommerce } = await import('../scripts/migrate-commerce.mjs');
     for (const name of ['sp_don_hang_update_status','sp_don_hang_cancel']) {
       const start=schema.indexOf('CREATE PROCEDURE '+name+'(');
@@ -43,6 +44,12 @@ test('checkout transactions against an isolated MySQL database', { skip: process
       assert.ok(start >= 0); await admin.query(schema.slice(start,schema.indexOf('$$',start)));
     }
     await migrateLocal();
+    const { migrateReports } = await import('../scripts/migrate-reports.mjs');
+    await migrateReports();
+    for (const table of ['voucher_su_dung', 'tai_khoan_voucher']) {
+      const definition = productSchema.match(new RegExp('CREATE TABLE `' + table + '` \\([\\s\\S]*?ENGINE=InnoDB[^;]*;'))?.[0];
+      assert.ok(definition); await admin.query(definition);
+    }
     const { createDonHang, previewCheckout } = await import('../dist/controllers/checkout.controller.js');
     const { cancelDonHang, getDonHangById } = await import('../dist/controllers/donHang.controller.js');
     const { addToCart, updateCartItem, selectCartVariant } = await import('../dist/controllers/gioHang.controller.js');

@@ -1,6 +1,6 @@
-# TỔNG QUAN CHỨC NĂNG VÀ NGHIỆP VỤ HỆ THỐNG ELECTRIC SHOP
+# TỔNG QUAN CHỨC NĂNG VÀ NGHIỆP VỤ HỆ THỐNG SMARTSHOP
 
-> **Dự án:** Ứng dụng Quản lý & Kinh doanh Thiết bị Điện Gia Dụng (**ElectricShop**)  
+> **Dự án:** Xây dựng hệ thống thương mại điện tử đa ngành (**SmartShop**)
 > **Kiến trúc:** 3 tầng (3-Tier Architecture)  
 > - **Backend (BE):** Node.js, Express, TypeScript, MySQL 8+  
 > - **Web Quản trị (Admin):** React, Vite, Ant Design, TypeScript  
@@ -10,10 +10,10 @@
 
 ## 1. TỔNG QUAN HỆ THỐNG & ĐỐI TƯỢNG SỬ DỤNG
 
-Hệ thống **ElectricShop** được xây dựng nhằm cung cấp giải pháp toàn diện cho việc kinh doanh thiết bị điện gia dụng, kết hợp giữa nền tảng ứng dụng di động cho khách hàng và cổng web quản trị vận hành dành cho ban quản trị và nhân viên cửa hàng.
+Hệ thống **SmartShop** được xây dựng nhằm cung cấp giải pháp thương mại điện tử đa ngành, kết hợp giữa nền tảng ứng dụng di động cho khách hàng và cổng web quản trị vận hành dành cho ban quản trị và nhân viên cửa hàng. Bộ dữ liệu mới có 9 danh mục, 36 sản phẩm và 72 biến thể; hướng dẫn chạy và tài khoản mới nằm trong [README.md](README.md).
 
 ### Các nhóm đối tượng sử dụng:
-1. **Khách hàng (Customer / Người dùng App Mobile):** Khám phá sản phẩm, lựa chọn thông số/biến thể (công suất, màu sắc, dung tích), quản lý giỏ hàng, áp dụng voucher, đặt hàng thanh toán COD, theo dõi tiến trình đơn hàng, lưu sổ địa chỉ, nhận thông báo và viết đánh giá sản phẩm.
+1. **Khách hàng (Customer / Người dùng App Mobile):** Khám phá sản phẩm, lựa chọn thuộc tính/biến thể (màu sắc, kích cỡ, dung lượng, phiên bản), quản lý giỏ hàng, áp dụng voucher, đặt hàng thanh toán COD, theo dõi tiến trình đơn hàng, lưu sổ địa chỉ, nhận thông báo và viết đánh giá sản phẩm.
 2. **Nhân viên (Staff / Nhân viên cửa hàng):** Sử dụng Web Admin để tiếp nhận và xử lý vòng đời đơn hàng, lập phiếu nhập kho, hỗ trợ giải đáp liên hệ của khách hàng, theo dõi tồn kho và in phiếu giao hàng.
 3. **Quản trị viên (Admin / Chủ cửa hàng):** Toàn quyền kiểm soát hệ thống: quản lý danh mục, thương hiệu, cấu hình thông số kỹ thuật động, quản lý sản phẩm và biến thể, phát hành mã giảm giá, quản trị nhân sự/tài khoản, xem báo cáo doanh thu và xuất dữ liệu Excel.
 
@@ -26,7 +26,12 @@ Hệ thống **ElectricShop** được xây dựng nhằm cung cấp giải phá
 ### 2.1. Thanh điều hướng chính (Bottom Tab Bar - 4 Tab)
 - **Trang chủ (`index`):**
   - Banner giới thiệu thương hiệu và thông điệp dịch vụ.
-  - Phím tắt truy cập nhanh danh mục **Voucher khuyến mãi**.
+  - **Gamification Action Hub:** Thanh tương tác 4 nút truy cập nhanh:
+    * 🎁 **Điểm danh (+100X):** Nhận xu hàng ngày & theo dõi chuỗi điểm danh.
+    * 👥 **Mời bạn bè (50K):** Nhận 50.000đ + 500 Xu khi giới thiệu bạn mới.
+    * 🎡 **Vòng quay (Hot):** Thử vận may trúng xu, voucher và quà tặng.
+    * 🏷️ **Kho Voucher:** Khám phá toàn bộ mã giảm giá cửa hàng.
+  - **Banner giữ chân khách hàng (Retention Banner):** Kêu gọi điểm danh duy trì chuỗi 7 - 30 ngày để nhận voucher giá trị cao tới 100K.
   - Thanh tìm kiếm sản phẩm nhanh.
   - Lưới sản phẩm mới nhất kèm nhãn tình trạng tồn kho, giá bán và đánh giá.
 - **Sản phẩm (`products`):**
@@ -40,9 +45,13 @@ Hệ thống **ElectricShop** được xây dựng nhằm cung cấp giải phá
   - Hiển thị tổng tiền tạm tính và nút điều hướng tới màn hình thanh toán.
 - **Tài khoản (`profile`):**
   - Hiển thị thông tin cá nhân (Họ tên, Email, Số điện thoại, Địa chỉ giao hàng) và chỉnh sửa thông tin.
-  - Nhóm chức năng mua sắm: **Đơn hàng của tôi**, **Voucher của tôi**, **Giỏ hàng**.
-  - Nhóm chức năng tương tác: **Gửi liên hệ cho cửa hàng**, **Phản hồi của tôi**.
-  - Nhóm bảo mật: **Đổi mật khẩu**, **Đăng xuất**.
+  - **Thẻ Ví Xu tích lũy (Loyalty Coin Card):** Hiển thị số dư Xu hiện có cùng nút truy cập nhanh trang đổi quà.
+  - **Nhóm Quà tặng & Giới thiệu:**
+    * **Điểm danh & Quà tặng:** Mở màn hình `/rewards`.
+    * **Mời bạn bè nhận 50.000đ:** Mở màn hình `/referral`.
+  - **Nhóm Mua sắm & Giao nhận:** Đơn hàng của tôi, Voucher của tôi, Giỏ hàng.
+  - **Nhóm Tương tác & Hỗ trợ:** Gửi liên hệ cho cửa hàng, Phản hồi của tôi.
+  - **Nhóm Bảo mật:** Đổi mật khẩu, Đăng xuất.
 
 **Quên mật khẩu:** tại màn hình đăng nhập mobile, bấm **Quên mật khẩu?**, nhập email và số điện thoại đã đăng ký cùng một tài khoản khách hàng đang hoạt động. Khi thông tin khớp, hệ thống đặt mật khẩu thành `12345678`, hiển thị mật khẩu mới và nút **Đăng nhập ngay**, đồng thời thu hồi mọi phiên cũ. Sai thông tin không làm thay đổi mật khẩu. API `POST /api/auth/forgot-password` giới hạn 5 yêu cầu/15 phút theo IP; không đặt lại tài khoản Admin/Nhân viên bằng luồng này.
 
@@ -60,10 +69,13 @@ Hệ thống **ElectricShop** được xây dựng nhằm cung cấp giải phá
 
 ### 2.3. Quy trình Đặt hàng & Thanh toán (`checkout`)
 - **Sổ địa chỉ giao hàng:** Cho phép chọn nhanh địa chỉ mặc định, chọn từ danh sách sổ địa chỉ đã lưu hoặc nhập trực tiếp thông tin người nhận mới (Họ tên, SĐT, Địa chỉ).
-- **Áp dụng Mã giảm giá (Voucher):**
-  - Mở danh sách voucher khả dụng của cửa hàng.
-  - Tự động kiểm tra điều kiện áp dụng (giá trị đơn hàng tối thiểu, lượt sử dụng còn lại, hạn sử dụng).
-  - Hiển thị rõ số tiền được giảm trừ trực tiếp vào đơn hàng.
+- **Hệ thống Kiểm tra & Áp dụng Mã giảm giá Chuyên sâu (Advanced Voucher Verification):**
+  - **Phân định quyền sở hữu (Voucher Ownership & Scope):**
+    * *Voucher Toàn sàn / Công khai (`la_cong_khai = TRUE`):* Mọi khách hàng đều có thể áp dụng nếu đạt điều kiện giá trị đơn tối thiểu (`don_toi_thieu`) và chưa vượt quá số lượt dùng cho phép (`moi_khach`).
+    * *Voucher Cá nhân / Phần thưởng (`la_cong_khai = FALSE`):* Chỉ tài khoản nào ĐÃ SỞ HỮU trong **Ví Voucher** (`tai_khoan_voucher`) thông qua điểm danh, vòng quay, đổi xu hoặc giới thiệu bạn bè mới được áp dụng. Người khác nhập mã sẽ bị từ chối với thông báo: *"Mã giảm giá này chỉ dành riêng cho tài khoản được tặng hoặc đổi thưởng hợp lệ."*
+  - **Giới hạn số lượt dùng trên mỗi khách hàng (`moi_khach = 1`):** Chống lạm dụng khuyến mãi, mỗi khách hàng chỉ được dùng voucher đó 1 lần.
+  - **Đa dạng hình thức ưu đãi:** Giảm tiền trực tiếp (`SoTien`), giảm theo phần trăm có trần giới hạn tối đa (`PhanTram` + `giam_toi_da`), hoặc miễn phí vận chuyển (`Freeship`).
+  - **Ghi nhận sử dụng & Hoàn lượt tự động:** Khi đặt đơn thành công, hệ thống ghi nhận vào `voucher_su_dung` và cập nhật ví voucher thành *Đã dùng*. Khi đơn hàng bị Hủy (`DaHuy`), hệ thống tự động hoàn lại lượt sử dụng (`hoan_luot = 1`) và mở lại voucher trong ví để khách hàng có thể dùng lại cho đơn sau.
 - **Phí vận chuyển:** Tự động tính toán theo cấu hình hệ thống và hỗ trợ chính sách miễn phí vận chuyển khi đơn hàng đạt ngưỡng giá trị quy định.
 - **Phương thức thanh toán:** Hỗ trợ linh hoạt: Thanh toán khi nhận hàng (COD), Chuyển khoản ngân hàng, Tiền mặt.
 - **Chống đặt trùng (Idempotency):** Cơ chế khóa request ngăn chặn việc người dùng nhấn liên tiếp nhiều lần gây trùng lặp đơn hàng.
@@ -80,13 +92,50 @@ Hệ thống **ElectricShop** được xây dựng nhằm cung cấp giải phá
   - Nút **Xem chi tiết sản phẩm** mở/thu gọn thông tin ngay trong đơn: mã sản phẩm, SKU biến thể, danh mục, thương hiệu, bảo hành và thông số kỹ thuật của đúng biến thể đã chọn. Thông tin danh mục/thông số được ghi rõ là dữ liệu hiện tại; số lượng và giá lấy từ đơn hàng. Sản phẩm không còn trong danh mục vẫn hiển thị thông tin đã đặt.
   - **Viết đánh giá sản phẩm:** Khi đơn hàng đạt trạng thái *Đã giao*, hệ thống kích hoạt form chấm điểm sao (1 - 5 sao) và viết nhận xét thực tế cho từng sản phẩm trong đơn.
 
-### 2.5. Tiện ích tài khoản & Tương tác khách hàng
-- **Sổ địa chỉ (`account-tools`):** Thêm mới nhiều địa chỉ giao hàng, chỉnh sửa, xóa và thiết lập một địa chỉ làm mặc định.
-- **Hộp thư thông báo (`account-tools`):** Nhận thông báo tự động theo thời gian thực mỗi khi đơn hàng được tạo mới, khi đơn hàng thay đổi trạng thái vận chuyển, hoặc khi cửa hàng phản hồi tin nhắn liên hệ.
+### 2.5. Hệ thống Gamification, Tích Xu & Giữ chân khách hàng (`rewards` & `referral`)
+- **Điểm danh nhận xu hàng ngày (Daily Check-in & Streak Loyalty 30 ngày):**
+  - Khách hàng đăng nhập mỗi ngày và điểm danh nhận **+100 Xu** (ngày thứ 3: +200 Xu, ngày thứ 7/14/21/30 có quà lớn).
+  - **Hành trình điểm danh 30 ngày trọn vẹn:** Giao diện hỗ trợ chuyển đổi linh hoạt giữa 2 chế độ:
+    * *Xem theo 4 Tuần:* Tuần 1 (ngày 1-7), Tuần 2 (ngày 8-14), Tuần 3 (ngày 15-21), Tuần 4+ (ngày 22-30) tự động chuyển đến tuần hiện tại của chuỗi.
+    * *Lưới Tháng 30 ngày:* Bố cục 6 cột x 5 hàng hiển thị trực quan toàn bộ 30 ngày, đánh dấu các ngày đã điểm danh và mốc quà đặc biệt.
+  - **Khu vực Mốc quà tặng chuỗi tương tác cao (Ấn nhận quà trực tiếp):**
+    * Tích hợp nút bấm trực tiếp **"🎁 Nhận quà"** khi chuỗi đạt mốc (kèm thanh tiến trình % hoàn thành):
+      * **Mốc 3 ngày:** Thưởng nóng +100 Xu.
+      * **Mốc 7 ngày:** Voucher `CHECKIN7D` (giảm 30.000đ từ 200.000đ) + 300 Xu thưởng.
+      * **Mốc 14 ngày:** Voucher `CHECKIN14D` (giảm 50.000đ từ 300.000đ) + 500 Xu thưởng.
+      * **Mốc 21 ngày:** Voucher `CHECKIN21D` (giảm 70.000đ từ 400.000đ) + 700 Xu thưởng.
+      * **Mốc 30 ngày:** Siêu Voucher `CHECKIN30D` (giảm 100.000đ từ 500.000đ) + 1.000 Xu thưởng.
+    * Nút chuyển đổi trạng thái thông minh: **"🎁 Nhận quà"** (sẵn sàng), **"✓ Đã nhận"** (đã nhận mốc), **"🔒 Chưa đạt"** (đang phấn đấu).
+    * Khi bấm nhận: Hệ thống tự động nạp Voucher vào Ví `tai_khoan_voucher`, cộng Xu vào tài khoản, lưu vết `lich_su_moc_diem_danh` chống nhận trùng trong chu kỳ 30 ngày và mở ngay Ví voucher cho khách hàng.
+  - Cơ chế tự động: Kiểm tra ngày điểm danh gần nhất; ngắt quãng sẽ tự động bắt đầu lại chuỗi, chống điểm danh trùng lặp trong ngày nhờ ràng buộc database `UNIQUE KEY`.
+- **Hệ thống Giới thiệu bạn bè & Nhập mã tân thủ (Referral Program):**
+  - Mỗi khách hàng được cấp một mã giới thiệu cá nhân duy nhất (ví dụ: `ESHOP12ABC`).
+  - Hỗ trợ nút sao chép mã 1 chạm và chia sẻ nhanh qua native Share Sheet (Zalo, Messenger, SMS,...).
+  - Khách hàng mới khi nhập mã giới thiệu của bạn bè:
+    * Nhận ngay **500 Xu** vào ví thưởng.
+    * Nhận ngay Voucher tân thủ `NEWBIE50K` giảm 50.000đ áp dụng tại Checkout.
+    * Người giới thiệu cũng nhận ngay **500 Xu** thưởng vào ví.
+  - Bảo mật & chống gian lận: Chặn tài khoản tự nhập mã của chính mình, chặn nhập mã nhiều lần, ghi nhận lịch sử vào bảng `lich_su_gioi_thieu`.
+- **Vòng quay may mắn (Lucky Spin Wheel):**
+  - Chi phí 100 Xu mỗi lượt quay.
+  - Tỷ lệ trúng thưởng 100% với nhiều phần quà hấp dẫn:
+    * Voucher mua hàng 50.000đ (`REWARD50K`).
+    * Voucher mua hàng 20.000đ (`REWARD20K`).
+    * Voucher miễn phí vận chuyển 15.000đ (`FREESHIP15K`).
+    * Jackpot 500 Xu, thưởng 200 Xu, hoặc hoàn 100 Xu.
+- **Kho Đổi Xu lấy Voucher mua hàng (Points Exchange):**
+  - Đổi điểm tích lũy thành mã giảm giá áp dụng trực tiếp khi thanh toán đơn hàng:
+    * 300 Xu ➔ Voucher giảm 20.000đ (`REWARD20K`).
+    * 600 Xu ➔ Voucher giảm 50.000đ (`REWARD50K`).
+    * 1.000 Xu ➔ Voucher giảm 100.000đ (`REWARD100K`).
+    * 250 Xu ➔ Voucher freeship 15.000đ (`FREESHIP15K`).
+
+### 2.6. Kênh liên hệ hỗ trợ & Tương tác khách hàng
 - **Kênh liên hệ hỗ trợ (`contact` & `contact-history`):** Khách hàng gửi yêu cầu tư vấn/khiếu nại bảo hành; theo dõi lịch sử và đọc nội dung phản hồi trực tiếp từ nhân viên cửa hàng.
   - Liên hệ gửi với phiên đăng nhập được gắn tài khoản từ token; danh sách *Phản hồi của tôi* chỉ trả liên hệ của chính tài khoản đó.
   - Gửi thành công giữ nguyên trang, xóa toàn bộ ô nhập và hiện thông báo thành công cùng nút xem phản hồi; khi gửi lỗi giữ lại nội dung để thử lại.
   - Khi Web Admin trả lời, trạng thái và nội dung phản hồi lưu trong cùng một cập nhật; trigger tạo thông báo cho người gửi khi nội dung trả lời thay đổi. Mobile kiểm tra thông báo mỗi 15 giây khi ứng dụng ở foreground, hiện banner **Xem phản hồi** và đánh dấu đã đọc khi mở/đóng. Trang phản hồi tự tải lại khi mở, khi quay lại ứng dụng và mỗi 15 giây lúc đang xem. Đây là thông báo trong ứng dụng, không phải push khi ứng dụng đã đóng.
+
 
 ---
 
@@ -117,7 +166,7 @@ Chạy `npm run seed:specifications` để bổ sung lên 10 thông số cho m�
   - Đồng bộ tự động tổng tồn kho sản phẩm cha theo tổng các biến thể con.
 
 ### 3.3. Quản lý Danh mục & Thương hiệu (`CategoriesPage`, `BrandsPage`)
-- Quản lý cây danh mục thiết bị gia dụng (Tủ lạnh, Máy giặt, Điều hòa, Bếp điện, Quạt điện,...).
+- Quản lý danh mục đa ngành: công nghệ, thời trang, làm đẹp, nhà cửa, thể thao, sách và văn phòng phẩm.
 - Quản lý đối tác thương hiệu và quốc gia xuất xứ (Samsung, Panasonic, LG, Daikin, Bosch, Sunhouse,...).
 
 ### 3.4. Quản lý Cấu hình Thông số kỹ thuật (`SpecificationsPage`)
@@ -142,17 +191,38 @@ Chạy `npm run seed:specifications` để bổ sung lên 10 thông số cho m�
   - Hệ thống ghi nhận tài khoản nhân viên lập phiếu và tự động cộng dồn tồn kho.
 - **Lịch sử nhập kho:** Tra cứu toàn bộ các đợt nhập hàng đã thực hiện kèm thời gian chính xác.
 
-### 3.7. Báo cáo & Phân tích (`ReportsPage`)
-- **Cảnh báo tồn kho thấp (Low Stock Alert):** Tự động phát hiện và cảnh báo các sản phẩm hoặc biến thể có số lượng tồn dưới ngưỡng an toàn để kịp thời lên kế hoạch nhập hàng.
-- Báo cáo thống kê sản phẩm bán chạy nhất (Top Sellers).
-- Báo cáo doanh số bán hàng theo khoảng ngày tùy chọn.
+### 3.7. Trung tâm Báo cáo Quản trị & Phân tích Kinh doanh Toàn diện (`ReportsPage`)
+Đáp ứng chuẩn mực nghiệp vụ cao nhất cho hệ thống bán hàng và quản trị chuỗi cung ứng:
+- **Báo cáo Chi tiết Đơn hàng Bán:**
+  - Tra cứu chi tiết từng dòng mặt hàng bán ra trên hệ thống.
+  - Ghi nhận chính xác: **Nhân viên nào bán/phụ trách** (Họ tên, Chức vụ, Mã nhân viên), **Khách hàng** (Tên, SĐT, Địa chỉ nhận), **Sản phẩm & Biến thể đã bán** (Tên sản phẩm, Màu sắc, Dung tích, Phiên bản SKU...), **Số lượng bán**, **Số lượng tồn trong kho (Tồn kho hiện tại)**, **Đơn giá niêm yết**, **Thành tiền**.
+  - Tự động đối soát tài chính: **Giá vốn hàng bán (COGS)**, **Lợi nhuận gộp (Lãi)** từng mặt hàng, **Mã Voucher** giảm giá, **Trạng thái đơn hàng** (Đã giao, Đang giao, Chờ xác nhận, Đã hủy) và **Phương thức thanh toán**.
+- **Báo cáo Chi tiết Nhập hàng (Nhật ký Kho):**
+  - Tra cứu chi tiết toàn bộ các lượt nhập kho: **Nhân viên nào nhập** (Họ tên, Chức vụ, Mã tài khoản/nhân viên), **Nhà cung cấp / Đối tác phân phối**, **Sản phẩm và Biến thể cụ thể được nhập** (hiển thị rõ thuộc tính: dung tích, màu sắc, công suất...), **Số lượng nhập**, **Đơn giá nhập**, **Tổng tiền nhập hàng (Thành tiền)** và **Ghi chú nhập hàng**.
+- **Báo cáo Hiệu suất & Đóng góp của Nhân viên:**
+  - **Bảng xếp hạng bán hàng:** Đo lường KPI từng nhân viên bán hàng gồm: Số đơn hàng hoàn tất, Tổng số lượng sản phẩm bán ra, Tổng doanh thu đem lại và Tổng lợi nhuận gộp tạo ra cho cửa hàng.
+  - **Bảng hoạt động nhập kho:** Đo lường hoạt động của nhân viên kho gồm: Số lượt lập phiếu nhập, Tổng số lượng sản phẩm tiếp nhận và Tổng giá trị hàng hóa nhập kho.
+- **Báo cáo Phân tích Tài chính & Chỉ số KPI Điều hành:**
+  - 5 Thẻ chỉ số chủ chốt: Tổng doanh thu bán hàng, Lợi nhuận gộp & Tỷ suất lợi nhuận (%), Tổng chi phí nhập kho & số lượng nhập, Tổng sản phẩm bán, Cảnh báo mặt hàng tồn kho thấp.
+  - Biểu đồ cột đa chỉ số trực quan: So sánh xu hướng Doanh thu bán hàng vs Chi phí nhập kho theo tháng.
+  - Phân bổ doanh số và lợi nhuận theo từng danh mục hàng hóa (Tủ lạnh, Máy giặt, Điều hòa, Bếp điện, Quạt...).
+  - Top sản phẩm bán chạy nhất và Danh sách cảnh báo hàng sắp hết / hết hàng cần bổ sung kho.
+- **Bộ lọc Thông minh & Xuất Báo cáo Excel Đa chức năng:**
+  - Lọc theo khoảng thời gian nhanh (Toàn thời gian, Hôm nay, 7 ngày qua, 30 ngày qua, Tháng này, Tháng trước) hoặc chọn Từ ngày - Đến ngày.
+  - Lọc theo từng nhân viên phụ trách, lọc theo trạng thái đơn bán, tìm kiếm nhanh theo mã đơn / mã phiếu / tên sản phẩm / tên nhân viên / tên khách.
+  - Xuất Excel chuyên nghiệp: Tùy chọn xuất toàn bộ sổ cái báo cáo (Đa Sheet tích hợp) hoặc xuất riêng từng bảng (Chi tiết bán hàng gồm cả cột tồn kho, Chi tiết nhập hàng, Hiệu suất nhân viên, Doanh thu theo tháng), hỗ trợ In và lưu file PDF chuẩn responsive.
 
-### 3.8. Quản lý Mã giảm giá / Voucher (`VouchersPage`)
+### 3.8. Quản lý Mã giảm giá & Kích hoạt Voucher Riêng Cho Tài Khoản (`ShopOperationsPage`)
 - Thiết lập mã code khuyến mãi (VD: `SALE50K`, `TRIAN100K`).
-- Cấu hình số tiền giảm giá cố định.
+- Cấu hình số tiền giảm giá cố định hoặc phần trăm.
 - Thiết lập điều kiện giá trị đơn hàng tối thiểu để được áp dụng.
 - Cấu hình tổng số lượt phát hành và thời hạn hiệu lực (Ngày bắt đầu - Ngày kết thúc).
 - Công tắc bật/tắt kích hoạt voucher tức thì.
+- **Kích hoạt Voucher riêng cho tài khoản (Cấp riêng qua SĐT / Username):**
+  - Quản trị viên nhập số điện thoại hoặc tên đăng nhập của bất kỳ khách hàng nào.
+  - Hệ thống kiểm tra, đối soát thông tin tài khoản (Họ tên, SĐT, Username, Điểm thưởng) và kích hoạt trực tiếp mã giảm giá vào ví `tai_khoan_voucher` của khách.
+  - Hỗ trợ thiết lập thời hạn hiệu lực riêng cho voucher được cấp (mặc định 30 ngày).
+  - Khách hàng nhận được voucher ngay trong Ví Voucher trên Mobile App và có thể áp dụng khi thanh toán.
 
 ### 3.9. Quản trị Tài khoản & Nhân sự (`AccountsPage`, `EmployeesPage`)
 - **Quản lý tài khoản:** Danh sách tài khoản người dùng, phân quyền vai trò (**Admin**, **NhanVien**, **KhachHang**), chức năng khóa/mở khóa tài khoản an toàn (ngăn chặn Admin tự khóa chính mình).
@@ -234,27 +304,47 @@ Cơ sở dữ liệu tích hợp các Trigger tự động phục vụ trải ng
 
 ---
 
-## 6. DANH MỤC CÁC BẢNG DỮ LIỆU CHÍNH (DATABASE SCHEMA)
+## 6. DANH MỤC CÁC BẢNG DỮ LIỆU ĐÃ TỐI ƯU (DATABASE SCHEMA - 29 BẢNG CHUẨN)
 
-1. `tai_khoan`: Quản lý thông tin đăng nhập, vai trò, trạng thái khóa, `token_version`.
-2. `nhan_vien`: Hồ sơ nhân sự, chức vụ, tiền lương, ngày vào làm.
-   - `staff_permissions`: Quyền nghiệp vụ của từng tài khoản nhân viên; danh sách JSON các mã nhóm quyền, tự xóa khi tài khoản bị xóa.
-3. `danh_muc`: Phân loại nhóm thiết bị gia dụng.
-4. `thuong_hieu`: Các hãng sản xuất và xuất xứ thương hiệu.
-5. `san_pham`: Bảng sản phẩm chính, giá niêm yết, tồn kho tổng, bảo hành, ảnh đại diện.
-6. `san_pham_bien_the`: Các phiên bản biến thể theo công suất/màu sắc, mã SKU, giá riêng, tồn kho riêng, `thong_so_json`.
-7. `hinh_anh_san_pham`: Bộ sưu tập nhiều ảnh cho mỗi sản phẩm.
-8. `nhom_thong_so`: Nhóm thông số kỹ thuật chuẩn hóa.
-9. `thong_so`: Định nghĩa thông số, đơn vị đo, kiểu dữ liệu, cờ lọc.
-10. `danh_muc_thong_so`: Bảng liên kết cấu hình thông số áp dụng cho từng danh mục.
-11. `thong_so_san_pham`: Giá trị thông số thực tế của từng sản phẩm.
-12. `gio_hang` & `chi_tiet_gio_hang`: Lưu trữ giỏ hàng người dùng theo sản phẩm và biến thể.
-13. `don_hang` & `chi_tiet_don_hang`: Quản lý đơn hàng, người nhận, địa chỉ, phí ship, voucher, trạng thái vòng đời.
-14. `checkout_requests`: Bảng lưu vết request thanh toán đảm bảo tính Idempotency.
-15. `voucher`: Mã giảm giá, hạn mức, điều kiện đơn tối thiểu, số lượt dùng.
-16. `dia_chi_giao_hang`: Sổ địa chỉ nhận hàng của khách hàng.
-17. `danh_gia`: Đánh giá số sao và bình luận của người mua thực tế.
-18. `lien_he`: Kênh tin nhắn liên hệ giữa khách hàng và bộ phận hỗ trợ.
-19. `nhap_kho`: Nhật ký các đợt nhập hàng bổ sung tồn kho.
-20. `thong_bao`: Hộp thư thông báo trong ứng dụng phát tự động qua DB Trigger.
-21. `auth_sessions`: Quản lý phiên đăng nhập và thu hồi token thiết bị.
+Hệ thống đã được tối ưu hóa toàn diện, loại bỏ triệt để 11 bảng tàn dư/trùng lặp (như `bien_the_san_pham`, `tai_khoan_dia_chi`, `phieu_kho`, `bien_dong_kho`, `yeu_cau_hau_mai`,...), quy tụ về **29 bảng dữ liệu chuẩn mực** được phân bổ theo 6 nhóm nghiệp vụ:
+
+### 6.1. Nhóm Tài khoản, Nhân sự & Bảo mật (4 bảng)
+1. `tai_khoan`: Thông tin người dùng, mật khẩu băm, vai trò (`Admin`, `NhanVien`, `KhachHang`), trạng thái khóa, `token_version`, điểm thưởng tích lũy, mã giới thiệu.
+2. `nhan_vien`: Hồ sơ nhân sự, chức vụ, mức lương, ngày vào làm, liên kết tài khoản.
+3. `staff_permissions`: Phân quyền chi tiết cho nhân viên web admin theo danh sách JSON.
+4. `auth_sessions`: Quản lý phiên đăng nhập và thu hồi token phiên làm việc.
+
+### 6.2. Nhóm Sản phẩm, Biến thể & Thông số kỹ thuật động (9 bảng)
+5. `danh_muc`: Nhóm hàng thương mại điện tử (điện thoại, máy tính, thời trang, làm đẹp, nhà cửa,...).
+6. `thuong_hieu`: Hãng sản xuất và quốc gia xuất xứ.
+7. `san_pham`: Bảng sản phẩm gốc, mã code, giá niêm yết, tồn kho tổng, bảo hành, ảnh đại diện.
+8. `san_pham_bien_the`: Biến thể chi tiết theo công suất/màu sắc/dung tích, mã SKU duy nhất, giá bán riêng, tồn kho riêng, thông số JSON riêng.
+9. `hinh_anh_san_pham`: Gallery đa hình ảnh cho mỗi sản phẩm.
+10. `nhom_thong_so`: Nhóm logic thông số kỹ thuật (Cơ bản, Kích thước, Điện năng, Công nghệ...).
+11. `thong_so`: Định nghĩa thông số, kiểu dữ liệu, đơn vị đo, cờ cho phép lọc.
+12. `danh_muc_thong_so`: Cấu hình danh mục nào yêu cầu các thông số kỹ thuật nào.
+13. `thong_so_san_pham`: Giá trị thông số kỹ thuật thực tế của từng sản phẩm.
+
+### 6.3. Nhóm Mua hàng, Giỏ hàng & Thanh toán (6 bảng)
+14. `gio_hang`: Giỏ hàng của từng tài khoản.
+15. `chi_tiet_gio_hang`: Mặt hàng và biến thể được thêm vào giỏ.
+16. `don_hang`: Đơn hàng, người nhận, địa chỉ, phí vận chuyển, voucher áp dụng, phương thức thanh toán, nhân viên phụ trách, trạng thái vòng đời.
+17. `chi_tiet_don_hang`: Chi tiết sản phẩm, biến thể, số lượng, đơn giá, giá vốn, thành tiền trong đơn.
+18. `checkout_requests`: Lưu vết idempotency chống thanh toán lặp.
+19. `dia_chi_giao_hang`: Sổ địa chỉ giao hàng nhận hàng của khách.
+
+### 6.4. Nhóm Quản trị Kho hàng (1 bảng)
+20. `nhap_kho`: Nhật ký các đợt nhập hàng kho, nhà cung cấp, giá vốn nhập, số lượng, nhân viên lập phiếu.
+
+### 6.5. Nhóm Tương tác, Đánh giá & CSKH (3 bảng)
+21. `danh_gia`: Đánh giá số sao (1-5★) và nhận xét thực tế sau khi nhận hàng.
+22. `lien_he`: Kênh tin nhắn liên hệ, khiếu nại của khách và nội dung phản hồi từ admin.
+23. `thong_bao`: Hộp thư thông báo trong ứng dụng phát tự động qua Database Trigger.
+
+### 6.6. Nhóm Khuyến mãi, Gamification & Loyalty (6 bảng)
+24. `voucher`: Danh mục mã giảm giá toàn hệ thống (mã code, giảm tiền, đơn tối thiểu, số lượt, thời hạn, công khai/riêng tư).
+25. `tai_khoan_voucher`: Ví voucher cá nhân của từng khách hàng (nhận qua điểm danh, mời bạn, đổi xu, hoặc admin kích hoạt riêng).
+26. `voucher_su_dung`: Lịch sử áp dụng mã voucher cho từng đơn hàng thực tế.
+27. `lich_su_diem_danh`: Nhật ký điểm danh hàng ngày và cộng điểm chuỗi.
+28. `lich_su_moc_diem_danh`: Lịch sử nhận thưởng các mốc chuỗi 3, 7, 14, 21, 30 ngày (chống nhận trùng lặp trong chu kỳ).
+29. `lich_su_gioi_thieu`: Ghi nhận sự kiện nhập mã tân thủ giữa người mời và người được mời.
